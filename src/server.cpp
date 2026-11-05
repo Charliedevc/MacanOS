@@ -21,7 +21,7 @@ int main(int argc,char **argv){
  auto broadcast=[&](){const auto s=snapshot();for(auto sock:peers.keys())send(sock,{{"event","state"},{"value",s}});};
  QObject::connect(&coordinator,&DisplayCoordinator::stateChanged,&app,broadcast);
  QObject::connect(&server,&QTcpServer::newConnection,&app,[&]{while(server.hasPendingConnections()){
-  auto *socket=server.nextPendingConnection();peers.insert(socket,{QUuid::createUuid().toString(),{}, {}});send(socket,{{"event","state"},{"value",snapshot()}});
+  auto *socket=server.nextPendingConnection();if(peers.size()>=8){socket->abort();socket->deleteLater();continue;}peers.insert(socket,{QUuid::createUuid().toString(),{}, {}});send(socket,{{"event","state"},{"value",snapshot()}});
   QObject::connect(socket,&QTcpSocket::disconnected,&app,[&,socket]{const auto peer=peers.take(socket);coordinator.unregisterDisplay(peer.role,peer.owner);socket->deleteLater();});
   QObject::connect(socket,&QTcpSocket::readyRead,&app,[&,socket]{
    if(!peers.contains(socket))return;
@@ -54,5 +54,8 @@ int main(int argc,char **argv){
  QTimer timer;QObject::connect(&timer,&QTimer::timeout,&app,[&]{coordinator.expire();broadcast();});timer.start(200);
  if(!server.listen(QHostAddress::LocalHost,quint16(port))){qCritical("Cannot listen: %s",qPrintable(server.errorString()));return 3;}
  QTextStream(stdout)<<QJsonDocument(QJsonObject{{"listeningPort",server.serverPort()},{"sessionId",coordinator.session()},{"pid",QCoreApplication::applicationPid()}}).toJson(QJsonDocument::Compact)<<Qt::endl;
- return app.exec();
+ int result=app.exec();timer.stop();server.close();
+ QObject::disconnect(&coordinator,nullptr,&app,nullptr);
+ for(auto *socket:peers.keys()){QObject::disconnect(socket,nullptr,&app,nullptr);socket->abort();}
+ peers.clear();return result;
 }

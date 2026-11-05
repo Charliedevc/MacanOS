@@ -1,0 +1,151 @@
+-- Could NOT find XKB (missing: XKB_LIBRARY XKB_INCLUDE_DIR) (Required is at least version "0.5.0")
+CMake Warning at /workspace/toolchain/sysroot/usr/lib/x86_64-linux-gnu/cmake/Qt6Qml/Qt6QmlMacros.cmake:4216 (message):
+  The qml plugin 'qtquick2plugin' is a dependency of
+  'macanos-display-client', but the link target it defines
+  (Qt6::qtquick2plugin) does not exist in the current scope.  The plugin will
+  not be linked.
+Call Stack (most recent call first):
+  /workspace/toolchain/sysroot/usr/lib/x86_64-linux-gnu/cmake/Qt6Core/Qt6CoreMacros.cmake:745 (qt6_import_qml_plugins)
+  /workspace/toolchain/sysroot/usr/lib/x86_64-linux-gnu/cmake/Qt6Core/Qt6CoreMacros.cmake:745 (cmake_language)
+  /workspace/toolchain/sysroot/usr/lib/x86_64-linux-gnu/cmake/Qt6Core/Qt6CoreMacros.cmake:823 (_qt_internal_finalize_executable)
+  /workspace/toolchain/sysroot/usr/lib/x86_64-linux-gnu/cmake/Qt6Core/Qt6CoreMacros.cmake:861:EVAL:1 (qt6_finalize_target)
+  CMakeLists.txt:DEFERRED
+
+
+CMake Warning at /workspace/toolchain/sysroot/usr/lib/x86_64-linux-gnu/cmake/Qt6Qml/Qt6QmlMacros.cmake:4216 (message):
+  The qml plugin 'qmlplugin' is a dependency of 'macanos-display-client', but
+  the link target it defines (Qt6::qmlplugin) does not exist in the current
+  scope.  The plugin will not be linked.
+Call Stack (most recent call first):
+  /workspace/toolchain/sysroot/usr/lib/x86_64-linux-gnu/cmake/Qt6Core/Qt6CoreMacros.cmake:745 (qt6_import_qml_plugins)
+  /workspace/toolchain/sysroot/usr/lib/x86_64-linux-gnu/cmake/Qt6Core/Qt6CoreMacros.cmake:745 (cmake_language)
+  /workspace/toolchain/sysroot/usr/lib/x86_64-linux-gnu/cmake/Qt6Core/Qt6CoreMacros.cmake:823 (_qt_internal_finalize_executable)
+  /workspace/toolchain/sysroot/usr/lib/x86_64-linux-gnu/cmake/Qt6Core/Qt6CoreMacros.cmake:861:EVAL:1 (qt6_finalize_target)
+  CMakeLists.txt:DEFERRED
+
+
+CMake Warning at /workspace/toolchain/sysroot/usr/lib/x86_64-linux-gnu/cmake/Qt6Qml/Qt6QmlMacros.cmake:4216 (message):
+  The qml plugin 'modelsplugin' is a dependency of 'macanos-display-client',
+  but the link target it defines (Qt6::modelsplugin) does not exist in the
+  current scope.  The plugin will not be linked.
+Call Stack (most recent call first):
+  /workspace/toolchain/sysroot/usr/lib/x86_64-linux-gnu/cmake/Qt6Core/Qt6CoreMacros.cmake:745 (qt6_import_qml_plugins)
+  /workspace/toolchain/sysroot/usr/lib/x86_64-linux-gnu/cmake/Qt6Core/Qt6CoreMacros.cmake:745 (cmake_language)
+  /workspace/toolchain/sysroot/usr/lib/x86_64-linux-gnu/cmake/Qt6Core/Qt6CoreMacros.cmake:823 (_qt_internal_finalize_executable)
+  /workspace/toolchain/sysroot/usr/lib/x86_64-linux-gnu/cmake/Qt6Core/Qt6CoreMacros.cmake:861:EVAL:1 (qt6_finalize_target)
+  CMakeLists.txt:DEFERRED
+
+
+CMake Warning at /workspace/toolchain/sysroot/usr/lib/x86_64-linux-gnu/cmake/Qt6Qml/Qt6QmlMacros.cmake:4216 (message):
+  The qml plugin 'workerscriptplugin' is a dependency of
+  'macanos-display-client', but the link target it defines
+  (Qt6::workerscriptplugin) does not exist in the current scope.  The plugin
+  will not be linked.
+Call Stack (most recent call first):
+  /workspace/toolchain/sysroot/usr/lib/x86_64-linux-gnu/cmake/Qt6Core/Qt6CoreMacros.cmake:745 (qt6_import_qml_plugins)
+  /workspace/toolchain/sysroot/usr/lib/x86_64-linux-gnu/cmake/Qt6Core/Qt6CoreMacros.cmake:745 (cmake_language)
+  /workspace/toolchain/sysroot/usr/lib/x86_64-linux-gnu/cmake/Qt6Core/Qt6CoreMacros.cmake:823 (_qt_internal_finalize_executable)
+  /workspace/toolchain/sysroot/usr/lib/x86_64-linux-gnu/cmake/Qt6Core/Qt6CoreMacros.cmake:861:EVAL:1 (qt6_finalize_target)
+  CMakeLists.txt:DEFERRED
+
+
+CMake Warning at /workspace/toolchain/sysroot/usr/lib/x86_64-linux-gnu/cmake/Qt6Qml/Qt6QmlMacros.cmake:4216 (message):
+  The qml plugin 'quickwindowplugin' is a dependency of
+  'macanos-display-client', but the link target it defines (Qt6::quickwindow)
+  does not exist in the current scope.  The plugin will not be linked.
+Call Stack (most recent call first):
+  /workspace/toolchain/sysroot/usr/lib/x86_64-linux-gnu/cmake/Qt6Core/Qt6CoreMacros.cmake:745 (qt6_import_qml_plugins)
+  /workspace/toolchain/sysroot/usr/lib/x86_64-linux-gnu/cmake/Qt6Core/Qt6CoreMacros.cmake:745 (cmake_language)
+  /workspace/toolchain/sysroot/usr/lib/x86_64-linux-gnu/cmake/Qt6Core/Qt6CoreMacros.cmake:823 (_qt_internal_finalize_executable)
+  /workspace/toolchain/sysroot/usr/lib/x86_64-linux-gnu/cmake/Qt6Core/Qt6CoreMacros.cmake:861:EVAL:1 (qt6_finalize_target)
+  CMakeLists.txt:DEFERRED
+
+
+CMake Warning at /workspace/toolchain/sysroot/usr/lib/x86_64-linux-gnu/cmake/Qt6Qml/Qt6QmlMacros.cmake:4216 (message):
+  The qml plugin 'qquicklayoutsplugin' is a dependency of
+  'macanos-display-client', but the link target it defines
+  (Qt6::qquicklayoutsplugin) does not exist in the current scope.  The plugin
+  will not be linked.
+Call Stack (most recent call first):
+  /workspace/toolchain/sysroot/usr/lib/x86_64-linux-gnu/cmake/Qt6Core/Qt6CoreMacros.cmake:745 (qt6_import_qml_plugins)
+  /workspace/toolchain/sysroot/usr/lib/x86_64-linux-gnu/cmake/Qt6Core/Qt6CoreMacros.cmake:745 (cmake_language)
+  /workspace/toolchain/sysroot/usr/lib/x86_64-linux-gnu/cmake/Qt6Core/Qt6CoreMacros.cmake:823 (_qt_internal_finalize_executable)
+  /workspace/toolchain/sysroot/usr/lib/x86_64-linux-gnu/cmake/Qt6Core/Qt6CoreMacros.cmake:861:EVAL:1 (qt6_finalize_target)
+  CMakeLists.txt:DEFERRED
+
+
+CMake Warning at /workspace/toolchain/sysroot/usr/lib/x86_64-linux-gnu/cmake/Qt6Qml/Qt6QmlMacros.cmake:4216 (message):
+  The qml plugin 'qtquick2plugin' is a dependency of 'tst_layout', but the
+  link target it defines (Qt6::qtquick2plugin) does not exist in the current
+  scope.  The plugin will not be linked.
+Call Stack (most recent call first):
+  /workspace/toolchain/sysroot/usr/lib/x86_64-linux-gnu/cmake/Qt6Core/Qt6CoreMacros.cmake:745 (qt6_import_qml_plugins)
+  /workspace/toolchain/sysroot/usr/lib/x86_64-linux-gnu/cmake/Qt6Core/Qt6CoreMacros.cmake:745 (cmake_language)
+  /workspace/toolchain/sysroot/usr/lib/x86_64-linux-gnu/cmake/Qt6Core/Qt6CoreMacros.cmake:823 (_qt_internal_finalize_executable)
+  /workspace/toolchain/sysroot/usr/lib/x86_64-linux-gnu/cmake/Qt6Core/Qt6CoreMacros.cmake:861:EVAL:1 (qt6_finalize_target)
+  CMakeLists.txt:DEFERRED
+
+
+CMake Warning at /workspace/toolchain/sysroot/usr/lib/x86_64-linux-gnu/cmake/Qt6Qml/Qt6QmlMacros.cmake:4216 (message):
+  The qml plugin 'qmlplugin' is a dependency of 'tst_layout', but the link
+  target it defines (Qt6::qmlplugin) does not exist in the current scope.
+  The plugin will not be linked.
+Call Stack (most recent call first):
+  /workspace/toolchain/sysroot/usr/lib/x86_64-linux-gnu/cmake/Qt6Core/Qt6CoreMacros.cmake:745 (qt6_import_qml_plugins)
+  /workspace/toolchain/sysroot/usr/lib/x86_64-linux-gnu/cmake/Qt6Core/Qt6CoreMacros.cmake:745 (cmake_language)
+  /workspace/toolchain/sysroot/usr/lib/x86_64-linux-gnu/cmake/Qt6Core/Qt6CoreMacros.cmake:823 (_qt_internal_finalize_executable)
+  /workspace/toolchain/sysroot/usr/lib/x86_64-linux-gnu/cmake/Qt6Core/Qt6CoreMacros.cmake:861:EVAL:1 (qt6_finalize_target)
+  CMakeLists.txt:DEFERRED
+
+
+CMake Warning at /workspace/toolchain/sysroot/usr/lib/x86_64-linux-gnu/cmake/Qt6Qml/Qt6QmlMacros.cmake:4216 (message):
+  The qml plugin 'modelsplugin' is a dependency of 'tst_layout', but the link
+  target it defines (Qt6::modelsplugin) does not exist in the current scope.
+  The plugin will not be linked.
+Call Stack (most recent call first):
+  /workspace/toolchain/sysroot/usr/lib/x86_64-linux-gnu/cmake/Qt6Core/Qt6CoreMacros.cmake:745 (qt6_import_qml_plugins)
+  /workspace/toolchain/sysroot/usr/lib/x86_64-linux-gnu/cmake/Qt6Core/Qt6CoreMacros.cmake:745 (cmake_language)
+  /workspace/toolchain/sysroot/usr/lib/x86_64-linux-gnu/cmake/Qt6Core/Qt6CoreMacros.cmake:823 (_qt_internal_finalize_executable)
+  /workspace/toolchain/sysroot/usr/lib/x86_64-linux-gnu/cmake/Qt6Core/Qt6CoreMacros.cmake:861:EVAL:1 (qt6_finalize_target)
+  CMakeLists.txt:DEFERRED
+
+
+CMake Warning at /workspace/toolchain/sysroot/usr/lib/x86_64-linux-gnu/cmake/Qt6Qml/Qt6QmlMacros.cmake:4216 (message):
+  The qml plugin 'workerscriptplugin' is a dependency of 'tst_layout', but
+  the link target it defines (Qt6::workerscriptplugin) does not exist in the
+  current scope.  The plugin will not be linked.
+Call Stack (most recent call first):
+  /workspace/toolchain/sysroot/usr/lib/x86_64-linux-gnu/cmake/Qt6Core/Qt6CoreMacros.cmake:745 (qt6_import_qml_plugins)
+  /workspace/toolchain/sysroot/usr/lib/x86_64-linux-gnu/cmake/Qt6Core/Qt6CoreMacros.cmake:745 (cmake_language)
+  /workspace/toolchain/sysroot/usr/lib/x86_64-linux-gnu/cmake/Qt6Core/Qt6CoreMacros.cmake:823 (_qt_internal_finalize_executable)
+  /workspace/toolchain/sysroot/usr/lib/x86_64-linux-gnu/cmake/Qt6Core/Qt6CoreMacros.cmake:861:EVAL:1 (qt6_finalize_target)
+  CMakeLists.txt:DEFERRED
+
+
+CMake Warning at /workspace/toolchain/sysroot/usr/lib/x86_64-linux-gnu/cmake/Qt6Qml/Qt6QmlMacros.cmake:4216 (message):
+  The qml plugin 'quickwindowplugin' is a dependency of 'tst_layout', but the
+  link target it defines (Qt6::quickwindow) does not exist in the current
+  scope.  The plugin will not be linked.
+Call Stack (most recent call first):
+  /workspace/toolchain/sysroot/usr/lib/x86_64-linux-gnu/cmake/Qt6Core/Qt6CoreMacros.cmake:745 (qt6_import_qml_plugins)
+  /workspace/toolchain/sysroot/usr/lib/x86_64-linux-gnu/cmake/Qt6Core/Qt6CoreMacros.cmake:745 (cmake_language)
+  /workspace/toolchain/sysroot/usr/lib/x86_64-linux-gnu/cmake/Qt6Core/Qt6CoreMacros.cmake:823 (_qt_internal_finalize_executable)
+  /workspace/toolchain/sysroot/usr/lib/x86_64-linux-gnu/cmake/Qt6Core/Qt6CoreMacros.cmake:861:EVAL:1 (qt6_finalize_target)
+  CMakeLists.txt:DEFERRED
+
+
+CMake Warning at /workspace/toolchain/sysroot/usr/lib/x86_64-linux-gnu/cmake/Qt6Qml/Qt6QmlMacros.cmake:4216 (message):
+  The qml plugin 'qquicklayoutsplugin' is a dependency of 'tst_layout', but
+  the link target it defines (Qt6::qquicklayoutsplugin) does not exist in the
+  current scope.  The plugin will not be linked.
+Call Stack (most recent call first):
+  /workspace/toolchain/sysroot/usr/lib/x86_64-linux-gnu/cmake/Qt6Core/Qt6CoreMacros.cmake:745 (qt6_import_qml_plugins)
+  /workspace/toolchain/sysroot/usr/lib/x86_64-linux-gnu/cmake/Qt6Core/Qt6CoreMacros.cmake:745 (cmake_language)
+  /workspace/toolchain/sysroot/usr/lib/x86_64-linux-gnu/cmake/Qt6Core/Qt6CoreMacros.cmake:823 (_qt_internal_finalize_executable)
+  /workspace/toolchain/sysroot/usr/lib/x86_64-linux-gnu/cmake/Qt6Core/Qt6CoreMacros.cmake:861:EVAL:1 (qt6_finalize_target)
+  CMakeLists.txt:DEFERRED
+
+
+-- Configuring done (0.3s)
+-- Generating done (0.0s)
+-- Build files have been written to: /workspace/MacanOS/build

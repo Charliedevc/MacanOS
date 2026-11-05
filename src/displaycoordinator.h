@@ -9,7 +9,6 @@
 // Own one instance inside the backend. No vehicle, audio-device, or OBD ownership.
 class DisplayCoordinator : public QObject {
  Q_OBJECT
- Q_CLASSINFO("octave.scope", "settings")
  Q_PROPERTY(QVariantMap state READ state NOTIFY stateChanged)
 public:
  using Clock=std::function<qint64()>;

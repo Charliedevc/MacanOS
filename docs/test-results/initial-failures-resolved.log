@@ -1,0 +1,38 @@
+test_01_all_modes_and_screenshots (__main__.MultiProcessTests.test_01_all_modes_and_screenshots) ... ok
+test_02_independent_and_shared_apps (__main__.MultiProcessTests.test_02_independent_and_shared_apps) ... ok
+test_03_navigation_approval_and_media (__main__.MultiProcessTests.test_03_navigation_approval_and_media) ... FAIL
+test_04_output_disappearance_and_explicit_resume (__main__.MultiProcessTests.test_04_output_disappearance_and_explicit_resume) ... ok
+test_05_process_crash_survivor_and_reconnect (__main__.MultiProcessTests.test_05_process_crash_survivor_and_reconnect) ... ok
+test_06_silent_backend_stale_and_restart (__main__.MultiProcessTests.test_06_silent_backend_stale_and_restart) ... /workspace/MacanOS/tests/test_processes.py:41: ResourceWarning: unclosed file <_io.TextIOWrapper name=4 encoding='UTF-8'>
+  cls.procs['server']=p
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+ok
+test_07_reject_unsupported_and_duplicate_roles (__main__.MultiProcessTests.test_07_reject_unsupported_and_duplicate_roles) ... FAIL
+test_08_clock_schedule_and_resolutions (__main__.MultiProcessTests.test_08_clock_schedule_and_resolutions) ... ok
+test_09_no_qml_runtime_errors (__main__.MultiProcessTests.test_09_no_qml_runtime_errors) ... ok
+
+======================================================================
+FAIL: test_03_navigation_approval_and_media (__main__.MultiProcessTests.test_03_navigation_approval_and_media)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/MacanOS/tests/test_processes.py", line 109, in test_03_navigation_approval_and_media
+    self.assertEqual(self.state(role)['state']['model']['media']['title'],'Red horizon')
+AssertionError: 'Night drive' != 'Red horizon'
+- Night drive
++ Red horizon
+
+
+======================================================================
+FAIL: test_07_reject_unsupported_and_duplicate_roles (__main__.MultiProcessTests.test_07_reject_unsupported_and_duplicate_roles)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/MacanOS/tests/test_processes.py", line 137, in test_07_reject_unsupported_and_duplicate_roles
+    self.control('driver','clearDTC');self.assertIn('prohibited',self.state()['message'])
+                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'prohibited' not found in ''
+
+----------------------------------------------------------------------
+Ran 9 tests in 34.615s
+
+FAILED (failures=2)
+sys:1: ResourceWarning: unclosed file <_io.TextIOWrapper name=9 encoding='UTF-8'>

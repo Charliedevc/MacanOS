@@ -1,0 +1,69 @@
+UpdateCTestConfiguration  from :/workspace/MacanOS/build/DartConfiguration.tcl
+Parse Config file:/workspace/MacanOS/build/DartConfiguration.tcl
+Test project /workspace/MacanOS/build
+Constructing a list of tests
+Done constructing a list of tests
+Updating test list for fixtures
+Added 0 tests to meet fixture requirements
+Checking test dependency graph...
+Checking test dependency graph end
+test 1
+    Start 1: display_coordinator
+
+1: Test command: /workspace/MacanOS/build/tst_coordinator
+1: Working Directory: /workspace/MacanOS/build
+1: Test timeout computed to be: 1500
+1: ********* Start testing of CoordinatorTests *********
+1: Config: Using QtTest library 6.8.2, Qt 6.8.2 (x86_64-little_endian-lp64 shared (dynamic) release build; by GCC 14.2.0), debian 13
+1: PASS   : CoordinatorTests::initTestCase()
+1: QWARN  : CoordinatorTests::defaultsAndInvalid() QFSFileEngine::open: No file name specified
+1: PASS   : CoordinatorTests::defaultsAndInvalid()
+1: QWARN  : CoordinatorTests::allTransitions() QFSFileEngine::open: No file name specified
+1: PASS   : CoordinatorTests::allTransitions()
+1: PASS   : CoordinatorTests::persistedPreferenceAndResume()
+1: QWARN  : CoordinatorTests::heartbeatAndOutputLoss() QFSFileEngine::open: No file name specified
+1: PASS   : CoordinatorTests::heartbeatAndOutputLoss()
+1: QWARN  : CoordinatorTests::ownership() QFSFileEngine::open: No file name specified
+1: PASS   : CoordinatorTests::ownership()
+1: QWARN  : CoordinatorTests::geometryAndTouch() QFSFileEngine::open: No file name specified
+1: PASS   : CoordinatorTests::geometryAndTouch()
+1: QWARN  : CoordinatorTests::calibration() QFSFileEngine::open: No file name specified
+1: PASS   : CoordinatorTests::calibration()
+1: QWARN  : CoordinatorTests::limitsAndDuplicateOutputs() QFSFileEngine::open: No file name specified
+1: PASS   : CoordinatorTests::limitsAndDuplicateOutputs()
+1: QWARN  : CoordinatorTests::synchronizedTransitions() QFSFileEngine::open: No file name specified
+1: PASS   : CoordinatorTests::synchronizedTransitions()
+1: QWARN  : CoordinatorTests::topologyChangeRequiresResume() QFSFileEngine::open: No file name specified
+1: PASS   : CoordinatorTests::topologyChangeRequiresResume()
+1: PASS   : CoordinatorTests::focusPersistence()
+1: PASS   : CoordinatorTests::corruptAndUnwritableSettings()
+1: PASS   : CoordinatorTests::cleanupTestCase()
+1: Totals: 14 passed, 0 failed, 0 skipped, 0 blacklisted, 9ms
+1: ********* Finished testing of CoordinatorTests *********
+1/2 Test #1: display_coordinator ..............   Passed    0.02 sec
+test 2
+    Start 2: qml_layouts
+
+2: Test command: /workspace/MacanOS/build/tst_layout
+2: Working Directory: /workspace/MacanOS/build
+2: Environment variables: 
+2:  QT_QPA_PLATFORM=offscreen
+2:  QT_QUICK_BACKEND=software
+2: Test timeout computed to be: 1500
+2: ********* Start testing of LayoutTests *********
+2: Config: Using QtTest library 6.8.2, Qt 6.8.2 (x86_64-little_endian-lp64 shared (dynamic) release build; by GCC 14.2.0), debian 13
+2: PASS   : LayoutTests::initTestCase()
+2: PASS   : LayoutTests::responsive(driver1280x480)
+2: PASS   : LayoutTests::responsive(driver1920x720)
+2: PASS   : LayoutTests::responsive(driver1920x1080)
+2: PASS   : LayoutTests::responsive(passenger1280x480)
+2: PASS   : LayoutTests::responsive(passenger1920x720)
+2: PASS   : LayoutTests::responsive(passenger1920x1080)
+2: PASS   : LayoutTests::cleanupTestCase()
+2: Totals: 8 passed, 0 failed, 0 skipped, 0 blacklisted, 815ms
+2: ********* Finished testing of LayoutTests *********
+2/2 Test #2: qml_layouts ......................   Passed    0.85 sec
+
+100% tests passed out of 2
+
+Total Test time (real) =   0.87 sec

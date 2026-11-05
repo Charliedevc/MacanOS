@@ -1,0 +1,17 @@
+test_01_all_modes_and_screenshots (__main__.MultiProcessTests.test_01_all_modes_and_screenshots) ... ok
+test_02_independent_and_shared_apps (__main__.MultiProcessTests.test_02_independent_and_shared_apps) ... ok
+test_03_navigation_approval_and_media (__main__.MultiProcessTests.test_03_navigation_approval_and_media) ... ok
+test_04_output_disappearance_and_explicit_resume (__main__.MultiProcessTests.test_04_output_disappearance_and_explicit_resume) ... ok
+test_05_process_crash_survivor_and_reconnect (__main__.MultiProcessTests.test_05_process_crash_survivor_and_reconnect) ... ok
+test_05b_driver_close_survivor_and_local_persistence (__main__.MultiProcessTests.test_05b_driver_close_survivor_and_local_persistence) ... ok
+test_06_silent_backend_stale_and_restart (__main__.MultiProcessTests.test_06_silent_backend_stale_and_restart) ... ok
+test_07_reject_unsupported_and_duplicate_roles (__main__.MultiProcessTests.test_07_reject_unsupported_and_duplicate_roles) ... ok
+test_08_clock_schedule_and_resolutions (__main__.MultiProcessTests.test_08_clock_schedule_and_resolutions) ... ok
+test_09_touch_coordinate_protocol (__main__.MultiProcessTests.test_09_touch_coordinate_protocol) ... ok
+test_10_offline_startup (__main__.MultiProcessTests.test_10_offline_startup) ... ok
+test_11_no_qml_runtime_errors (__main__.MultiProcessTests.test_11_no_qml_runtime_errors) ... ok
+
+----------------------------------------------------------------------
+Ran 12 tests in 44.196s
+
+OK

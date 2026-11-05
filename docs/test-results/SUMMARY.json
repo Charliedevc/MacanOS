@@ -1,0 +1,28 @@
+{
+  "date": "2026-11-05",
+  "baseline": "cefde60 (documentation only; v0.5 source absent)",
+  "platform": "Debian 13 x86_64, GCC 14.2, Qt 6.8.2, software/offscreen Qt Quick",
+  "coordinatorCases": 12,
+  "layoutDataCases": 6,
+  "processCases": 12,
+  "totalCasesExcludingInitCleanup": 30,
+  "failedFinalCases": 0,
+  "screenshots": 10,
+  "clockHalfRttMs": {
+    "driver": 0.5,
+    "passenger": 2
+  },
+  "notTested": [
+    "original v0.5 regression",
+    "Android APK or device",
+    "ARM64 build",
+    "physical dual outputs/hotplug",
+    "physical touchscreen",
+    "audible audio",
+    "real vehicle/OBD/GNSS",
+    "GPU frame-lock"
+  ],
+  "qtRuntimeTests": "PASS",
+  "pythonSyntax": "PASS",
+  "shellSyntax": "PASS"
+}

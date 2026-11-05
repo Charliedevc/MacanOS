@@ -1,0 +1,4 @@
+[0/2] Re-checking globbed directories...
+[1/5] Automatic MOC for target tst_layout
+[2/4] Building CXX object CMakeFiles/tst_layout.dir/tests/tst_layout.cpp.o
+[3/4] Linking CXX executable tst_layout

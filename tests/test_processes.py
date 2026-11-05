@@ -120,6 +120,13 @@ class MultiProcessTests(unittest.TestCase):
         self.assertIsNone(self.procs['driver'].poll());self.assertEqual(self.procs['driver'].pid,driver_pid);self.assertEqual(self.procs['server'].pid,backend_pid)
         self.control('driver','model',{'method':'setVolume','volume':63})
         self.start_client('passenger');self.wait_pair();wait_for(lambda:self.state('passenger')['state']['model']['media']['volume']==63);self.assertEqual(self.state()['mode'],'INDEPENDENT');self.mode('SHARED')
+    def test_05b_driver_close_survivor_and_local_persistence(self):
+        self.mode('SHARED');passenger_pid=self.procs['passenger'].pid;backend_pid=self.procs['server'].pid
+        self.procs['driver'].terminate();self.procs['driver'].wait();wait_for(lambda:self.state('passenger')['mode']=='INDEPENDENT')
+        self.assertIsNone(self.procs['passenger'].poll());self.assertEqual(self.procs['passenger'].pid,passenger_pid);self.assertEqual(self.procs['server'].pid,backend_pid)
+        self.control('passenger','model',{'method':'setVolume','volume':71});self.assertTrue(self.state('passenger')['controlResult']['ok'])
+        self.start_client('driver');self.wait_pair();wait_for(lambda:self.state()['state']['model']['media']['volume']==71)
+        self.assertEqual(self.state()['localApp'],'navigation');self.assertEqual(self.state()['mode'],'INDEPENDENT')
     def test_06_silent_backend_stale_and_restart(self):
         self.mode('UNIFIED');old_session=self.state()['state']['sessionId']
         os.kill(self.procs['server'].pid,signal.SIGSTOP)
@@ -147,7 +154,23 @@ class MultiProcessTests(unittest.TestCase):
             wait_for(lambda:self.state('passenger')['windowWidth']==width and self.state('passenger')['windowHeight']==height)
             self.mode('UNIFIED');g=self.state()['state']['geometry'];self.assertEqual(g['width'],1280+24+width);self.assertEqual(g['height'],height)
             path=SHOTS/(f'responsive-{width}x{height}-passenger.png');self.control('passenger','screenshot',{'path':str(path)});wait_for(path.exists)
-    def test_09_no_qml_runtime_errors(self):
+    def test_09_touch_coordinate_protocol(self):
+        self.mode('UNIFIED');state=self.state()['state'];generation=state['transition']['generation']
+        self.control('passenger','touch',{'x':320,'y':120,'generation':generation})
+        reply=self.state('passenger')['controlResult'];self.assertTrue(reply['ok']);mapped=reply['result'];origin=state['geometry']['viewports']['passenger']['x']
+        self.assertAlmostEqual(mapped['canvasX'],origin+320);self.assertAlmostEqual(mapped['canvasY'],120)
+        self.control('passenger','touch',{'x':320,'y':120,'generation':generation-1});self.assertFalse(self.state('passenger')['controlResult']['ok'])
+    def test_10_offline_startup(self):
+        # Reserve a currently unused local port, then close it before launching the offline client.
+        with socket.socket() as reserve:reserve.bind(('127.0.0.1',0));port=reserve.getsockname()[1]
+        with tempfile.TemporaryDirectory() as temp:
+            root=pathlib.Path(temp);log=open(ART/'offline.log','w')
+            process=subprocess.Popen([str(BUILD/'macanos-display-client'),'--role','driver','--port',str(port),'--settings',str(root/'layout.ini'),'--diagnostic',str(root/'state.json')],stdout=log,stderr=log)
+            try:
+                wait_for(lambda:read(root/'state.json').get('role')=='driver',description='offline initial render')
+                state=read(root/'state.json');self.assertFalse(state['online']);self.assertEqual(state['mode'],'INDEPENDENT');self.assertIsNone(process.poll())
+            finally:process.terminate();process.wait(timeout=3);log.close()
+    def test_11_no_qml_runtime_errors(self):
         for role in ('driver','passenger'):
             log=(ART/(role+'.log')).read_text();self.assertNotIn('ReferenceError',log);self.assertNotIn('TypeError',log);self.assertNotIn('Unable to assign',log);self.assertNotIn('QQmlApplicationEngine failed',log)
 if __name__=='__main__':unittest.main(argv=[__file__]+REST,verbosity=2)
