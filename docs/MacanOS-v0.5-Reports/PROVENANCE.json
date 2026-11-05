@@ -1,0 +1,27 @@
+{
+  "generatedDate": "2026-11-05",
+  "timezoneForDate": "America/New_York",
+  "kind": "conversation-based report reconstruction",
+  "originalWorkspaceAvailable": false,
+  "originalSourceRecovered": false,
+  "originalBinariesRecovered": false,
+  "originalScreenshotsRecovered": false,
+  "historicalSoftwareTestsRerun": false,
+  "priorRecordedBranch": "macanos/v0.5",
+  "priorRecordedCommit": "d6a19ad",
+  "priorRecordedGitReferencesVerifiedNow": false,
+  "artifactsIncluded": [
+    "PDF report",
+    "Word report",
+    "Markdown report",
+    "HTML report",
+    "CSV tables",
+    "reconstructed architecture diagram"
+  ],
+  "notIncluded": [
+    "Original MacanOS source",
+    "Executable deployment archives",
+    "Original UI screenshots",
+    "Original raw test logs"
+  ]
+}

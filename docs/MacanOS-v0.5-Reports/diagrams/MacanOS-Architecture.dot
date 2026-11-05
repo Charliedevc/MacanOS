@@ -1,0 +1,28 @@
+digraph MacanOS {
+ graph [rankdir=LR, bgcolor="white", pad="0.25", nodesep="0.35", ranksep="0.5", fontname="DejaVu Sans", label="MacanOS — reconstructed architecture\nDesign intent; physical interfaces unverified", labelloc=t, fontsize=18];
+ node [shape=box, style="rounded,filled", fillcolor="#eef1f4", color="#53616e", fontname="DejaVu Sans", fontsize=11, margin="0.13,0.10"];
+ edge [color="#657786", fontname="DejaVu Sans", fontsize=9];
+ subgraph cluster_linux {label="Preferred removable Linux bench"; color="#a8b3bd"; style=rounded;
+ s [label="Supervisor\nindependent recovery"];
+ b [label="One OCTAVE backend\ntelemetry / navigation / media",fillcolor="#f8e8e9",color="#9b3d45"];
+ d [label="Driver Qt process\nlocal layout / map camera"];
+ p [label="Passenger Qt process\nlocal layout / map camera"];
+ db [label="Profile / SQLite trips",shape=cylinder];
+ gps [label="Simulated GPS\nfuture GNSS boundary"];
+ obd [label="OBD simulator\nbackend read-only enforcement"];
+ a [label="Qt audio adapter\nsoftware loopback reported"];
+ w [label="Wayland compositor\noutput mapping"];
+ s -> b;s -> d;s -> p;
+ b -> d [dir=both,label="loopback JSON"];b -> p [dir=both,label="loopback JSON"];
+ b -> db;gps -> b;obd -> b;b -> a;d -> w;p -> w;
+ }
+ monitors [label="Independent bench\nHDMI / USB-touch monitors"];
+ n [label="NaviRider panels\ninputs / touch / topology unknown",fillcolor="#fff4da",color="#ae822d"];
+ pcm [label="Factory PCM / cluster /\ncameras / controls retained"];
+ android [label="Android Qt activities alternative\nAPK / independent access unverified",fillcolor="#fff4da",color="#ae822d"];
+ amp [label="Factory audio / DAC / DSP\nvehicle path unverified"];
+ w -> monitors;w -> n [style=dashed,label="requires video + touch proof"];
+ pcm -> n [style=dashed,label="vendor retention interface"];
+ b -> android [style=dashed,label="developer bridge / future secure transport"];
+ a -> amp [style=dashed,label="qualification required"];
+}

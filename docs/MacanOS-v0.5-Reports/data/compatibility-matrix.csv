@@ -1,0 +1,20 @@
+Specification,Exact NaviRider status,Required evidence
+"SKU, PCM and trim fit",Unknown,"Item/variant ID, PCM part/software, dash photos and steering-side configuration"
+Processor and motherboard,Unknown,"SoC marking, PCB revision, board identifier and supported Android ABIs"
+Android and firmware,Unknown,"SDK level, release, security patch, fingerprint and update policy"
+RAM and storage,Unknown,"Ordered configuration, usable capacity and partitions"
+Independent display access,Unknown,OS display dump and different third-party apps simultaneously on separate IDs
+Shared framebuffer/mirroring,Inferred possibility only,Panel/controller diagram and compositor behavior
+Resolution and brightness,Unknown,"Per-panel modes, refresh, luminance and dimming"
+HDMI input,Unknown,"Connector marked IN, accepted modes, latency and two-input demonstration"
+HDMI output,Unknown,"Direction, modes and independent versus mirrored behavior"
+External USB touch,Unknown,"External-host USB descriptors, separate HID devices/endpoints and mapping proof"
+Bootloader/recovery,Unknown,"Supported signed image, checksum and ordinary recovery procedure"
+Third-party APK support,Unknown,"Signed Qt APK installation, ABI/API, networking/maps and restart tests"
+Custom launcher/fullscreen,Unknown,"HOME selection/reversion, sleep/wake and OEM takeover tests"
+CANBUS decoder,Unknown,"Part/firmware, wiring, write behavior and available read-only app interface"
+Factory PCM retention,Unknown,Exact PCM match and failback with MacanOS disconnected/crashed
+Camera/parking sensors,Unknown,"Camera format, switching, overlays/chimes and failure-mode operation"
+Steering/microphone,Unknown,App-accessible key events and microphone/audio routing
+Factory audio/MOST,Unknown,"Vehicle topology, harness, levels, protocol and source priority"
+Ignition/sleep/thermal,Unknown,"Cold boot, crank, hot-soak and off-state drain measurements"

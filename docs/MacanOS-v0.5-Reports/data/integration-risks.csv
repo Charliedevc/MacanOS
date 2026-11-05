@@ -1,0 +1,9 @@
+Risk,Acceptance evidence
+Wrong PCM/trim/harness,Exact match; no forced connectors or unverified wiring changes
+Airbag/vent/trim conflict,Drawings and professional clearance assessment
+Proprietary CAN-box transmission,Document behavior; MacanOS cannot constrain third-party firmware
+Camera/PDC/chime priority,"OEM takeover with MacanOS closed, crashed and disconnected"
+Sleep drain/crank/heat,Protected supply and measured transitions/current/thermal behavior
+Firmware/recovery failure,"Supported stock image, checksum, recovery and return terms"
+Clipping/noise/missing bass,"Trace bandwidth, levels, polarity and output/load behavior"
+Remote backend exposure,Authenticated/encrypted design before LAN deployment

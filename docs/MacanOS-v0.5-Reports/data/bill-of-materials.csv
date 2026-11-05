@@ -1,0 +1,11 @@
+Item,Qty,Prior allowance,Gate
+Raspberry Pi 5 4GB,1,$110–140,Conditional removable-bench candidate
+Cooler and ventilated case,1,$20–40,Sustained thermal testing
+Appropriate bench PSU,1,$15–25,"Bench only, not automotive converter"
+Endurance microSD,1,$20–35,Initial boot/recovery
+micro-HDMI cables,2,$15–30 total,Actual monitor inputs
+Independent HDMI/USB-touch monitors,2,$240–500 total,Explicit input/HID specifications
+USB Audio Class DAC,1,$30–100,"Enumeration, level and noise tests"
+Optional NVMe adapter/SSD,1,$60–120,Defer pending measurements
+Later USB GNSS/antenna,1,$30–80,Interface selection first
+Later qualified diagnostic adapter,1,$50–150,Read-only qualification

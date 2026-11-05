@@ -1,0 +1,9 @@
+Criterion,Raspberry Pi 5,Orange Pi 5 Plus,Radxa ROCK 5B
+CPU/GPU family,"BCM2712, four A76 cores; VideoCore VII",RK3588 A76/A55; Mali-G610,RK3588 A76/A55; Mali-G610
+Displays,Two micro-HDMI outputs; documented dual 4K60,Two HDMI outputs; separate input and other interfaces,"Two HDMI outputs plus DP/DSI; separate input, revision-dependent"
+Qt 6 route,Debian 13/Trixie and Qt 6.8 bench candidate,Image/kernel/graphics qualification needed,Image/kernel/graphics qualification needed
+Video,HEVC capability documented; Qt path needs measurement,SoC codec claims do not prove Qt acceleration,Same qualification applies
+Boot/graphics performance,Unmeasured on target,Unmeasured on target,Unmeasured on target
+Power/thermal,Suitable bench PSU and active cooler; automotive protection required,Exact supply/draw/cooling need validation,Exact supply/draw/cooling need validation
+Touch,Compatible independent monitor interface required,Same,Same
+"Prior board budget, USD",4GB $110–140; 8GB $175–210,8GB $120–200 allowance,8GB $140–220 allowance

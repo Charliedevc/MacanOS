@@ -1,0 +1,9 @@
+{
+  "documentValidation": "passed",
+  "pdfPages": 8,
+  "wordTables": 7,
+  "csvFiles": 5,
+  "architectureDiagram": "newly rendered from recorded design; not an original screenshot",
+  "originalSoftwareRecovered": false,
+  "historicalSoftwareTestsRerun": false
+}

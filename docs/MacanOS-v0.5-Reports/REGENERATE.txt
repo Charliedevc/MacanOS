@@ -1,0 +1,8 @@
+Report-only regeneration, requires pandoc, Graphviz, and XeLaTeX:
+
+cd reports
+pandoc MacanOS-v0.5-Recreated-Report.md -o MacanOS-v0.5-Recreated-Report.docx --resource-path=.:..
+pandoc MacanOS-v0.5-Recreated-Report.md -o MacanOS-v0.5-Recreated-Report.pdf --resource-path=.:.. --pdf-engine=xelatex -V mainfont="DejaVu Sans" -V geometry:margin=0.7in -V fontsize=10pt
+
+The Markdown source and Graphviz .dot source are included. These are report
+sources, not the original MacanOS application source code.

@@ -1,0 +1,1035 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="dcterms.date" content="2026-11-05" />
+  <title>MacanOS v0.5 — Recreated Deliverables</title>
+  <style>
+    html {
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      html {
+        background-color: white;
+      }
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    svg {
+      height: auto;
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      background-color: #1a1a1a;
+      border: none;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+    /* CSS for syntax highlighting */
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { color: #008000; } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { color: #008000; font-weight: bold; } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+  <style>
+  body{font:17px/1.6 system-ui,sans-serif;color:#16202a;max-width:1080px;margin:40px auto;padding:0 24px}h1,h2{line-height:1.2;color:#263746}h1{margin-top:2em}a{color:#8e303d}table{border-collapse:collapse;width:100%;font-size:14px}td,th{border:1px solid #bac4cc;padding:8px;text-align:left;vertical-align:top}th{background:#edf1f4}pre{white-space:pre-wrap;background:#edf1f4;padding:16px}img{max-width:100%;height:auto}code{overflow-wrap:anywhere}header{text-align:center;border-bottom:3px solid #973e48;padding-bottom:24px}@media print{body{font-size:11pt}}
+  </style>
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">MacanOS v0.5 — Recreated Deliverables</h1>
+<p class="subtitle">Hardware compatibility, architecture and deployment
+engineering</p>
+<p class="date">November 5, 2026</p>
+</header>
+<nav id="TOC" role="doc-toc">
+<ul>
+<li><a href="#read-this-first" id="toc-read-this-first">Read this
+first</a></li>
+<li><a href="#decision-and-project-boundaries"
+id="toc-decision-and-project-boundaries">1. Decision and project
+boundaries</a></li>
+<li><a href="#deliverable-availability"
+id="toc-deliverable-availability">2. Deliverable availability</a></li>
+<li><a href="#hardware-evidence-and-compatibility-matrix"
+id="toc-hardware-evidence-and-compatibility-matrix">3. Hardware evidence
+and compatibility matrix</a></li>
+<li><a href="#candidate-architecture" id="toc-candidate-architecture">4.
+Candidate architecture</a></li>
+<li><a href="#android-native-deployment-assessment"
+id="toc-android-native-deployment-assessment">5. Android-native
+deployment assessment</a></li>
+<li><a href="#linux-deployment-engineering-reference"
+id="toc-linux-deployment-engineering-reference">6. Linux deployment
+engineering reference</a>
+<ul>
+<li><a href="#commands-for-a-restored-repository-only"
+id="toc-commands-for-a-restored-repository-only">Commands for a restored
+repository only</a></li>
+</ul></li>
+<li><a href="#bench-bill-of-materials"
+id="toc-bench-bill-of-materials">7. Bench bill of materials</a></li>
+<li><a href="#factory-audio-and-integration-risks"
+id="toc-factory-audio-and-integration-risks">8. Factory audio and
+integration risks</a></li>
+<li><a href="#bench-checklist-and-purchase-gates"
+id="toc-bench-checklist-and-purchase-gates">9. Bench checklist and
+purchase gates</a></li>
+<li><a href="#historical-validation-not-rerun-here"
+id="toc-historical-validation-not-rerun-here">10. Historical validation
+— not rerun here</a>
+<ul>
+<li><a href="#previously-reported-host-resource-measurements"
+id="toc-previously-reported-host-resource-measurements">Previously
+reported host resource measurements</a></li>
+</ul></li>
+<li><a href="#recovering-missing-original-artifacts"
+id="toc-recovering-missing-original-artifacts">11. Recovering missing
+original artifacts</a></li>
+<li><a href="#references-retained-from-the-earlier-report"
+id="toc-references-retained-from-the-earlier-report">12. References
+retained from the earlier report</a></li>
+</ul>
+</nav>
+<h1 id="read-this-first">Read this first</h1>
+<p><strong>This is a report reconstruction from the conversation, not
+recovery of the original software artifacts.</strong> The original
+development environment is unavailable. The new workspace has no MacanOS
+repository, binaries, archives, original screenshots or raw test logs.
+Connected-repository searches found no recoverable project copy. The
+earlier work was reported as local and unpublished.</p>
+<p>This package recreates the engineering reports, compatibility matrix,
+architecture diagram, estimated bill of materials, risk assessment,
+bench checklist and installation reference. Software results below are
+<strong>historical results reported in the preceding
+conversation</strong>; they have not been rerun or independently
+verified in this replacement workspace. Only these newly generated
+document files are being validated now.</p>
+<p>The previous record identifies branch <code>macanos/v0.5</code>,
+final commit <code>d6a19ad</code>, implementation commit
+<code>ea6c7b7</code> and packaging change <code>5701ecd</code>, based on
+v0.4 commit <code>a702fec</code>. These references have not been
+recovered from a Git repository here.</p>
+<p><strong>Not included:</strong> original source changes, tested AMD64
+executable package, ARM64 source/deployment archive, Android prototype
+source files, actual screenshots or raw validation logs. No substitute
+executables or invented screenshots are provided.</p>
+<h1 id="decision-and-project-boundaries">1. Decision and project
+boundaries</h1>
+<p>MacanOS is intended for a 2017 Porsche Macan Base, using OCTAVE’s
+C++17, Qt 6/QML, JSON TCP service, media services and SQLite trip
+history. The design uses two independent frontends with one backend. The
+driver frontend is an infotainment role, not a replacement for the
+factory cluster or warnings.</p>
+<p><strong>Recommended decision from the prior report:</strong> defer
+purchasing the NaviRider-style head unit and JL amplifier. First obtain
+exact seller evidence, diagnose the existing bass fault, and validate a
+removable bench system. A Raspberry Pi 5 4GB with active cooling and
+independently specified HDMI/USB-touch monitors was the preferred bench
+candidate. This does not establish installed Macan or NaviRider
+compatibility.</p>
+<p>Do not assume two physical screens appear as two Android displays. Do
+not assume HDMI is an input, USB exposes touchscreen HID, a 64-bit
+processor exposes a 64-bit application ABI, or factory audio uses MOST.
+Keep factory controls, safety systems and vehicle-control modules
+outside scope. No purchase, firmware modification, security bypass,
+publication or merge is authorized by this reconstruction.</p>
+<h1 id="deliverable-availability">2. Deliverable availability</h1>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Deliverable</th>
+<th>Recreated package</th>
+<th>Original-artifact status</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Engineering report and validation summary</td>
+<td>PDF, Word and Markdown</td>
+<td>Reconstructed from conversation</td>
+</tr>
+<tr class="even">
+<td>Compatibility matrix and BOM</td>
+<td>Report and CSV</td>
+<td>Historical assessment; not newly researched</td>
+</tr>
+<tr class="odd">
+<td>Architecture diagram</td>
+<td>Report, SVG and PNG</td>
+<td>Newly drawn from recorded design</td>
+</tr>
+<tr class="even">
+<td>Integration risks and bench checklist</td>
+<td>Report</td>
+<td>Reconstructed</td>
+</tr>
+<tr class="odd">
+<td>Installation/deployment instructions</td>
+<td>Reference commands and limitations</td>
+<td>Implementation files unavailable</td>
+</tr>
+<tr class="even">
+<td>v0.5 source and Android prototype code</td>
+<td>Not included</td>
+<td>Requires repository/workspace recovery</td>
+</tr>
+<tr class="odd">
+<td>Tested AMD64 application archive</td>
+<td>Not included</td>
+<td>Original archive unavailable</td>
+</tr>
+<tr class="even">
+<td>ARM64 source/deployment archive</td>
+<td>Not included</td>
+<td>Original archive unavailable; no successful full ARM64 build
+reported</td>
+</tr>
+<tr class="odd">
+<td>Actual screenshots and raw test logs</td>
+<td>Not included</td>
+<td>Original files unavailable</td>
+</tr>
+</tbody>
+</table>
+<h1 id="hardware-evidence-and-compatibility-matrix">3. Hardware evidence
+and compatibility matrix</h1>
+<p>The reference product was
+<code>https://a.aliexpress.com/_mPtr5ML</code>. The previous
+investigation could not retrieve that exact listing. Its item, selected
+variant and specifications remain unresolved. This reconstruction does
+not claim a fresh listing fetch.</p>
+<p>Classification: <strong>Verified</strong> means measured on the exact
+hardware; <strong>seller-advertised</strong> is a claim scoped to a
+named product; <strong>inferred</strong> is an engineering hypothesis;
+<strong>unknown</strong> means evidence is missing. There were zero
+verified hardware specifications for the exact referenced NaviRider
+unit.</p>
+<p>Comparable seller pages previously discussed included KOASON
+early-Macan dual-screen models, R_PROJEKT’s MediaTek 8667/Android 13
+listing, iKAGOO FD-136’s unspecified Qualcomm eight-core/Android 16
+listing, and a Navifly early-Macan product. These differing claims must
+not be transferred to NaviRider or treated as one shared
+motherboard.</p>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Specification</th>
+<th>Exact NaviRider status</th>
+<th>Required evidence</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>SKU, PCM and trim fit</td>
+<td>Unknown</td>
+<td>Item/variant ID, PCM part/software, dash photos and steering-side
+configuration</td>
+</tr>
+<tr class="even">
+<td>Processor and motherboard</td>
+<td>Unknown</td>
+<td>SoC marking, PCB revision, board identifier and supported Android
+ABIs</td>
+</tr>
+<tr class="odd">
+<td>Android and firmware</td>
+<td>Unknown</td>
+<td>SDK level, release, security patch, fingerprint and update
+policy</td>
+</tr>
+<tr class="even">
+<td>RAM and storage</td>
+<td>Unknown</td>
+<td>Ordered configuration, usable capacity and partitions</td>
+</tr>
+<tr class="odd">
+<td>Independent display access</td>
+<td>Unknown</td>
+<td>OS display dump and different third-party apps simultaneously on
+separate IDs</td>
+</tr>
+<tr class="even">
+<td>Shared framebuffer/mirroring</td>
+<td>Inferred possibility only</td>
+<td>Panel/controller diagram and compositor behavior</td>
+</tr>
+<tr class="odd">
+<td>Resolution and brightness</td>
+<td>Unknown</td>
+<td>Per-panel modes, refresh, luminance and dimming</td>
+</tr>
+<tr class="even">
+<td>HDMI input</td>
+<td>Unknown</td>
+<td>Connector marked IN, accepted modes, latency and two-input
+demonstration</td>
+</tr>
+<tr class="odd">
+<td>HDMI output</td>
+<td>Unknown</td>
+<td>Direction, modes and independent versus mirrored behavior</td>
+</tr>
+<tr class="even">
+<td>External USB touch</td>
+<td>Unknown</td>
+<td>External-host USB descriptors, separate HID devices/endpoints and
+mapping proof</td>
+</tr>
+<tr class="odd">
+<td>Bootloader/recovery</td>
+<td>Unknown</td>
+<td>Supported signed image, checksum and ordinary recovery
+procedure</td>
+</tr>
+<tr class="even">
+<td>Third-party APK support</td>
+<td>Unknown</td>
+<td>Signed Qt APK installation, ABI/API, networking/maps and restart
+tests</td>
+</tr>
+<tr class="odd">
+<td>Custom launcher/fullscreen</td>
+<td>Unknown</td>
+<td>HOME selection/reversion, sleep/wake and OEM takeover tests</td>
+</tr>
+<tr class="even">
+<td>CANBUS decoder</td>
+<td>Unknown</td>
+<td>Part/firmware, wiring, write behavior and available read-only app
+interface</td>
+</tr>
+<tr class="odd">
+<td>Factory PCM retention</td>
+<td>Unknown</td>
+<td>Exact PCM match and failback with MacanOS disconnected/crashed</td>
+</tr>
+<tr class="even">
+<td>Camera/parking sensors</td>
+<td>Unknown</td>
+<td>Camera format, switching, overlays/chimes and failure-mode
+operation</td>
+</tr>
+<tr class="odd">
+<td>Steering/microphone</td>
+<td>Unknown</td>
+<td>App-accessible key events and microphone/audio routing</td>
+</tr>
+<tr class="even">
+<td>Factory audio/MOST</td>
+<td>Unknown</td>
+<td>Vehicle topology, harness, levels, protocol and source priority</td>
+</tr>
+<tr class="odd">
+<td>Ignition/sleep/thermal</td>
+<td>Unknown</td>
+<td>Cold boot, crank, hot-soak and off-state drain measurements</td>
+</tr>
+</tbody>
+</table>
+<p>An HDMI output cannot receive an SBC’s output. Internal touch wiring
+does not prove external USB HID support. Factory-system retention does
+not prove third-party app access to its controls. A vendor CAN box may
+transmit even while MacanOS’s own diagnostics are read-only.</p>
+<h1 id="candidate-architecture">4. Candidate architecture</h1>
+<p>The following are previously discussed manufacturer capabilities and
+judgments, not MacanOS measurements on these boards.</p>
+<table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Criterion</th>
+<th>Raspberry Pi 5</th>
+<th>Orange Pi 5 Plus</th>
+<th>Radxa ROCK 5B</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>CPU/GPU family</td>
+<td>BCM2712, four A76 cores; VideoCore VII</td>
+<td>RK3588 A76/A55; Mali-G610</td>
+<td>RK3588 A76/A55; Mali-G610</td>
+</tr>
+<tr class="even">
+<td>Displays</td>
+<td>Two micro-HDMI outputs; documented dual 4K60</td>
+<td>Two HDMI outputs; separate input and other interfaces</td>
+<td>Two HDMI outputs plus DP/DSI; separate input,
+revision-dependent</td>
+</tr>
+<tr class="odd">
+<td>Qt 6 route</td>
+<td>Debian 13/Trixie and Qt 6.8 bench candidate</td>
+<td>Image/kernel/graphics qualification needed</td>
+<td>Image/kernel/graphics qualification needed</td>
+</tr>
+<tr class="even">
+<td>Video</td>
+<td>HEVC capability documented; Qt path needs measurement</td>
+<td>SoC codec claims do not prove Qt acceleration</td>
+<td>Same qualification applies</td>
+</tr>
+<tr class="odd">
+<td>Boot/graphics performance</td>
+<td>Unmeasured on target</td>
+<td>Unmeasured on target</td>
+<td>Unmeasured on target</td>
+</tr>
+<tr class="even">
+<td>Power/thermal</td>
+<td>Suitable bench PSU and active cooler; automotive protection
+required</td>
+<td>Exact supply/draw/cooling need validation</td>
+<td>Exact supply/draw/cooling need validation</td>
+</tr>
+<tr class="odd">
+<td>Touch</td>
+<td>Compatible independent monitor interface required</td>
+<td>Same</td>
+<td>Same</td>
+</tr>
+<tr class="even">
+<td>Prior board budget, USD</td>
+<td>4GB $110–140; 8GB $175–210</td>
+<td>8GB $120–200 allowance</td>
+<td>8GB $140–220 allowance</td>
+</tr>
+</tbody>
+</table>
+<p>These are historical planning ranges, not current quotes. Use a
+multi-client Wayland compositor for two independent Qt applications. Two
+separate EGLFS applications cannot be assumed to own the same graphics
+device. An SBC having two outputs does not establish that the head unit
+accepts either.</p>
+<p>The preferred Linux bench design has one backend owning telemetry
+sources, storage and audio. Each frontend owns its layout and map
+camera. Physical GNSS, OBD, audio, touch and power adapters are
+separately qualified boundaries.</p>
+<figure>
+<img src="../diagrams/MacanOS-Architecture.png" style="width:6in"
+alt="Reconstructed architecture; physical interfaces remain unverified" />
+<figcaption aria-hidden="true">Reconstructed architecture; physical
+interfaces remain unverified</figcaption>
+</figure>
+<h1 id="android-native-deployment-assessment">5. Android-native
+deployment assessment</h1>
+<p>The prior v0.5 work was reported to prepare a Qt frontend APK
+structure, not replace manufacturer firmware or port the entire backend
+to Android. It reused the QML interface and reconnecting backend
+client.</p>
+<p>The recorded design used separate driver/passenger QtActivity
+processes, a setup activity enumerating actual Android DisplayManager
+IDs and explicit display launch requests. Firmware can deny requests or
+expose only one display. Independent touch, input focus, process
+survival and OEM camera/PCM takeover still require device tests.</p>
+<p>The prototype declared a user-selectable HOME entry and normal
+immersive fullscreen behavior. It did not force a default launcher,
+install a privileged boot receiver, unlock a bootloader or override
+factory functions. HOME selection does not guarantee boot/wake
+restoration or manufacturer-service retention.</p>
+<p>The connection prototype used loopback or an already-authorized ADB
+reverse developer bridge. Production paired/encrypted network transport
+was unfinished. Do not expose a trusted local backend to a
+vehicle/public LAN as a workaround. Audio remained on the backend;
+Android media controls did not prove Android or factory audio
+playback.</p>
+<p><strong>Historical blocker:</strong> no successful APK build,
+Java/NDK compile, emulator run or head-unit run was reported. A target
+Qt Android ARM64 kit, configured matching host tools, SDK/build tools
+and compatible NDK were missing. Desktop Qt and Java alone were
+insufficient.</p>
+<h1 id="linux-deployment-engineering-reference">6. Linux deployment
+engineering reference</h1>
+<p>The prior implementation was reported to add an independently
+supervised simulator kiosk while preserving the desktop launcher. The
+supervisor owned one backend, restarted children with bounded backoff,
+refused conflicting listeners, emitted JSON logs and retained a
+persistent profile.</p>
+<p>Display assignments used observed Qt names or unique serial
+selectors. Missing/ambiguous displays hid their windows instead of
+covering another role. Simulated file-backed hotplug was tested;
+physical cables/controllers were not.</p>
+<p>Release tools were reported to check ELF architecture/checksums,
+reject unsafe archive members, stage versioned releases, switch symlinks
+atomically and support rollback while stopped. SQLite backup used its
+backup API. Code rollback was not a database-schema downgrade
+mechanism.</p>
+<p>A systemd user-service template was prepared but not enabled or
+boot-tested in a suitable graphical session. Qt clients handled
+termination on their event loop. Simulated ignition-off stopped
+applications; it did not halt the host, remove power or send
+vehicle-control commands. Physical ignition isolation, protected supply
+and hold-up remained unimplemented.</p>
+<p>Offline mode was reported to enforce map/search/routing restrictions
+at the backend and suppress update checks. Licensed offline packs and a
+matching cached route could still be used; no regional map/routing
+database was bundled.</p>
+<h2 id="commands-for-a-restored-repository-only">Commands for a restored
+repository only</h2>
+<p>These are references to previously reported files. <strong>They
+cannot run from this report-only package.</strong> Restore the original
+repository first.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> macanos/scripts/run.py</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> macanos/scripts/supervise.py <span class="at">--config</span> macanos/config/desktop-kiosk.json</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="ex">./build-macanos/macanos-client</span> <span class="at">--list-screens</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> macanos/scripts/android_build.py <span class="at">--check</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">sh</span> macanos/deploy/linux/build-native.sh /path/to/build-arm64</span></code></pre></div>
+<p>The prior native build script rejected an AMD64 host. Cross-build
+attempts did not complete a full target compile/run: repository issues,
+an installer OOM and a controlled retry cancellation for disk headroom
+were recorded. A source kit must not be described as a tested ARM64
+executable package.</p>
+<h1 id="bench-bill-of-materials">7. Bench bill of materials</h1>
+<p>These prior USD allowances exclude tax, shipping and labor. They are
+neither current quotes nor purchase authorization. Reuse the development
+computer and existing monitors first.</p>
+<table>
+<colgroup>
+<col style="width: 21%" />
+<col style="width: 28%" />
+<col style="width: 28%" />
+<col style="width: 21%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Item</th>
+<th style="text-align: right;">Qty</th>
+<th style="text-align: right;">Prior allowance</th>
+<th>Gate</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Raspberry Pi 5 4GB</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">$110–140</td>
+<td>Conditional removable-bench candidate</td>
+</tr>
+<tr class="even">
+<td>Cooler and ventilated case</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">$20–40</td>
+<td>Sustained thermal testing</td>
+</tr>
+<tr class="odd">
+<td>Appropriate bench PSU</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">$15–25</td>
+<td>Bench only, not automotive converter</td>
+</tr>
+<tr class="even">
+<td>Endurance microSD</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">$20–35</td>
+<td>Initial boot/recovery</td>
+</tr>
+<tr class="odd">
+<td>micro-HDMI cables</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">$15–30 total</td>
+<td>Actual monitor inputs</td>
+</tr>
+<tr class="even">
+<td>Independent HDMI/USB-touch monitors</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">$240–500 total</td>
+<td>Explicit input/HID specifications</td>
+</tr>
+<tr class="odd">
+<td>USB Audio Class DAC</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">$30–100</td>
+<td>Enumeration, level and noise tests</td>
+</tr>
+<tr class="even">
+<td>Optional NVMe adapter/SSD</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">$60–120</td>
+<td>Defer pending measurements</td>
+</tr>
+<tr class="odd">
+<td>Later USB GNSS/antenna</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">$30–80</td>
+<td>Interface selection first</td>
+</tr>
+<tr class="even">
+<td>Later qualified diagnostic adapter</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">$50–150</td>
+<td>Read-only qualification</td>
+</tr>
+</tbody>
+</table>
+<p>Core compute/cooling/PSU/storage/cables: approximately
+<strong>$180–270</strong>. With new touch monitors and DAC:
+approximately <strong>$450–870</strong>. Automotive power, hold-up,
+mounting, harnesses and installation need a separate design/quote. The
+head unit and JL amplifier remain outside an approved purchase list.</p>
+<h1 id="factory-audio-and-integration-risks">8. Factory audio and
+integration risks</h1>
+<p>The user reported standard factory audio and unresolved loss of bass.
+That does not identify the amplifier, speaker count, PCM output topology
+or MOST use. Obtain actual part numbers, options, connector information
+and wiring documentation before selecting an interface.</p>
+<p>The prior report cited JL documentation describing analog and stereo
+Toslink S/PDIF inputs on the VX800/8i, with USB for
+configuration/tuning. Do not assume its USB port is a USB Audio Class
+input. A qualified DAC or digital interface could supply appropriate
+audio only after rates, level control, grounding, source priority and
+call/chime retention are verified. MOST and Toslink S/PDIF are different
+protocols.</p>
+<p>An amplifier does not necessarily correct upstream filtering,
+polarity cancellation, a disconnected/damaged speaker or faulty wiring.
+Diagnose the existing system first. Use qualified installation
+measurements and vehicle-specific documentation; do not code control
+modules to make an unverified harness work.</p>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Risk</th>
+<th>Acceptance evidence</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Wrong PCM/trim/harness</td>
+<td>Exact match; no forced connectors or unverified wiring changes</td>
+</tr>
+<tr class="even">
+<td>Airbag/vent/trim conflict</td>
+<td>Drawings and professional clearance assessment</td>
+</tr>
+<tr class="odd">
+<td>Proprietary CAN-box transmission</td>
+<td>Document behavior; MacanOS cannot constrain third-party
+firmware</td>
+</tr>
+<tr class="even">
+<td>Camera/PDC/chime priority</td>
+<td>OEM takeover with MacanOS closed, crashed and disconnected</td>
+</tr>
+<tr class="odd">
+<td>Sleep drain/crank/heat</td>
+<td>Protected supply and measured transitions/current/thermal
+behavior</td>
+</tr>
+<tr class="even">
+<td>Firmware/recovery failure</td>
+<td>Supported stock image, checksum, recovery and return terms</td>
+</tr>
+<tr class="odd">
+<td>Clipping/noise/missing bass</td>
+<td>Trace bandwidth, levels, polarity and output/load behavior</td>
+</tr>
+<tr class="even">
+<td>Remote backend exposure</td>
+<td>Authenticated/encrypted design before LAN deployment</td>
+</tr>
+</tbody>
+</table>
+<h1 id="bench-checklist-and-purchase-gates">9. Bench checklist and
+purchase gates</h1>
+<ol type="1">
+<li>Obtain exact SKU, board/SoC/MCU, Android API/ABI and supported
+recovery documentation.</li>
+<li>Prove separate OS displays and independent touch with real
+third-party Qt content. If using an external host, prove two video
+inputs and both touch returns.</li>
+<li>Validate native ARM64 build and graphics stack on a removable bench;
+inventory actual output/input identities.</li>
+<li>Test either-client failure, backend recovery, display
+removal/return, persistence, offline startup and rollback.</li>
+<li>Measure cold boot, wake, sustained resources, temperatures and
+storage on the target.</li>
+<li>Test protected bench power and simulated ignition. App shutdown
+alone does not remove power.</li>
+<li>Diagnose the bass fault before qualifying a DAC/analog/digital path
+with controlled gain and suitable loads.</li>
+<li>Verify factory camera, PDC, chimes, cluster, controls and mechanical
+clearance before installation.</li>
+<li>Choose Android-native only after two-display APK proof; choose
+external Linux/head-unit display use only after input/touch proof.
+Otherwise use independently specified monitors or decline the unit.</li>
+</ol>
+<h1 id="historical-validation-not-rerun-here">10. Historical validation
+— not rerun here</h1>
+<p>The preceding conversation reported these results in the original
+Debian 13 AMD64 workspace, Qt 6.8.2 and GCC 14.2. Original logs/software
+are unavailable here.</p>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Check</th>
+<th>Previously reported result</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Upstream CTest</td>
+<td>58/59 passed; existing optional Quick 3D software-renderer failure
+remained</td>
+</tr>
+<tr class="even">
+<td>MacanOS Qt suites</td>
+<td>4/4 passed, including 96 layout cases, touch, stale ETA, reconnect
+and hardware contracts</td>
+</tr>
+<tr class="odd">
+<td>Deployment unit tests</td>
+<td>8/8 passed</td>
+</tr>
+<tr class="even">
+<td>Navigation/media integration</td>
+<td>Passed with real backend and independent clients</td>
+</tr>
+<tr class="odd">
+<td>Kiosk lifecycle</td>
+<td>Passed simulated hotplug, independent restart, backend recovery and
+persistence</td>
+</tr>
+<tr class="even">
+<td>Staged AMD64 package</td>
+<td>Lifecycle passed; source-bearing package run reported 9.729
+seconds</td>
+</tr>
+<tr class="odd">
+<td>TypeScript SDK</td>
+<td>7/7 passed</td>
+</tr>
+<tr class="even">
+<td>Host audio loopback</td>
+<td>330 Hz, volume response and pause silence through real Qt output and
+private software sink</td>
+</tr>
+<tr class="odd">
+<td>Android APK</td>
+<td>Toolchain-blocked; no successful device/emulator run</td>
+</tr>
+<tr class="even">
+<td>Full ARM64 build/run</td>
+<td>Not achieved</td>
+</tr>
+<tr class="odd">
+<td>Systemd boot integration</td>
+<td>Not executed in a suitable user session</td>
+</tr>
+<tr class="even">
+<td>Physical head-unit/vehicle interfaces</td>
+<td>Not tested</td>
+</tr>
+</tbody>
+</table>
+<h2 id="previously-reported-host-resource-measurements">Previously
+reported host resource measurements</h2>
+<p>The historical run used two 1920×720 windows, simulated active route,
+shared MP3, warmed map caches and software/offscreen rendering. CPU
+percentages refer to one logical core; RSS includes shared mappings.</p>
+<table>
+<thead>
+<tr class="header">
+<th>Process</th>
+<th style="text-align: right;">CPU % of one core</th>
+<th style="text-align: right;">Peak RSS MiB</th>
+<th style="text-align: right;">Render interval p95 ms</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Backend</td>
+<td style="text-align: right;">5.37</td>
+<td style="text-align: right;">60.54</td>
+<td style="text-align: right;">—</td>
+</tr>
+<tr class="even">
+<td>Driver</td>
+<td style="text-align: right;">18.83</td>
+<td style="text-align: right;">80.64</td>
+<td style="text-align: right;">2.50</td>
+</tr>
+<tr class="odd">
+<td>Passenger</td>
+<td style="text-align: right;">17.24</td>
+<td style="text-align: right;">77.21</td>
+<td style="text-align: right;">2.07</td>
+</tr>
+</tbody>
+</table>
+<p>These were approximately 15-second desktop observations, not
+SBC/Android FPS, power or thermal results. Render signals exclude other
+work/presentation. Requested benchmark updates made swap counts
+unsuitable as physical refresh rates.</p>
+<p>The prior audio test reported normalized RMS around 0.009500 at
+volume 40, 0.038001 at volume 80, and zero paused, with a 330 Hz
+software signal. No speakers, physical DAC or vehicle amplifier was
+verified.</p>
+<h1 id="recovering-missing-original-artifacts">11. Recovering missing
+original artifacts</h1>
+<p>A report reconstruction cannot recover local Git objects or
+executable bytes. To restore the complete original deliverables, recover
+the earlier workspace or supply a saved repository/archive. Useful
+inputs include a Git bundle, a checkout including <code>.git</code>, or
+the original source-kit/application archives.</p>
+<p>The prior record referenced:</p>
+<ul>
+<li><code>macanos/artifacts/macanos-v0.5-amd64.tar.gz</code></li>
+<li><code>macanos/artifacts/macanos-v0.5-arm64-source-kit.tar.gz</code></li>
+<li><code>macanos/docs/screenshots/v05/driver.png</code></li>
+<li><code>macanos/docs/screenshots/v05/passenger.png</code></li>
+<li><code>macanos/docs/test-results/v05-*</code></li>
+</ul>
+<p>Do not replace them with fabricated code or illustrations labeled as
+originals. Once recovered, verify hashes, preserve notices, rerun
+appropriate checks and export fresh attachments. Publishing or merging
+is unnecessary.</p>
+<h1 id="references-retained-from-the-earlier-report">12. References
+retained from the earlier report</h1>
+<p>These links are retained for traceability, not newly revalidated
+research.</p>
+<ul>
+<li>OCTAVE: https://github.com/RobDeGeorge/OCTAVE</li>
+<li>Reference product: https://a.aliexpress.com/_mPtr5ML</li>
+<li>Raspberry Pi 5:
+https://www.raspberrypi.com/products/raspberry-pi-5/</li>
+<li>Orange Pi 5 Plus:
+https://www.orangepi.org/html/hardWare/computerAndMicrocontrollers/details/Orange-Pi-5-plus.html</li>
+<li>Radxa ROCK 5B:
+https://docs.radxa.com/en/rock5/rock5b/getting-started/introduction</li>
+<li>Qt Android:
+https://doc.qt.io/qt-6.8/android-getting-started.html</li>
+<li>Android displays:
+https://developer.android.com/reference/android/view/Display</li>
+<li>JL/Garmin VXi:
+https://www.garmin.com.hk/products/audio/jl-vx800-8i/</li>
+<li>OSM tile policy:
+https://operations.osmfoundation.org/policies/tiles/</li>
+<li>OSM copyright: https://www.openstreetmap.org/copyright</li>
+<li>OSRM: https://project-osrm.org/docs/v5.24.0/api/</li>
+</ul>
+</body>
+</html>

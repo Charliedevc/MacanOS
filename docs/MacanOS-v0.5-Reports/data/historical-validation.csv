@@ -1,0 +1,13 @@
+Check,Previously reported result
+Upstream CTest,58/59 passed; existing optional Quick 3D software-renderer failure remained
+MacanOS Qt suites,"4/4 passed, including 96 layout cases, touch, stale ETA, reconnect and hardware contracts"
+Deployment unit tests,8/8 passed
+Navigation/media integration,Passed with real backend and independent clients
+Kiosk lifecycle,"Passed simulated hotplug, independent restart, backend recovery and persistence"
+Staged AMD64 package,Lifecycle passed; source-bearing package run reported 9.729 seconds
+TypeScript SDK,7/7 passed
+Host audio loopback,"330 Hz, volume response and pause silence through real Qt output and private software sink"
+Android APK,Toolchain-blocked; no successful device/emulator run
+Full ARM64 build/run,Not achieved
+Systemd boot integration,Not executed in a suitable user session
+Physical head-unit/vehicle interfaces,Not tested
