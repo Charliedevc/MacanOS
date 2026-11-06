@@ -1,0 +1,175 @@
+{
+  "attachment": "file_0000000008a881f5974712d354584708",
+  "archive": "drive-download-20261105T233359Z-1-001.zip",
+  "archiveSha256": "8819a5452a8ceca3e25ed8889cf2d1a9613b1569a71b908e0c220c39a333431c",
+  "totalFiles": 18,
+  "uniqueFileHashes": 11,
+  "uniqueDecodedImages": 11,
+  "exactRedundantCopies": 7,
+  "imagesUnmodified": true,
+  "classification": "Version labels inferred from visible UI labels, visual content and supplied reports; source revisions not cryptographically established.",
+  "files": [
+    {
+      "original": "driver (1).png",
+      "retainedOriginal": "driver (1).png",
+      "cleanFilename": "v02-driver.png",
+      "exactDuplicate": false,
+      "width": 1920,
+      "height": 720,
+      "sha256": "0e9645ac0476f1414d3986459d6da8a62c785ebaef1579c298981a851c062e3c"
+    },
+    {
+      "original": "driver (4).png",
+      "retainedOriginal": "driver (3).png",
+      "cleanFilename": "v04-driver.png",
+      "exactDuplicate": true,
+      "width": 1920,
+      "height": 720,
+      "sha256": "4d21563723edb166c350b2d4a23c8604b7d3ae6658e56ca9bb9414d2adf2f963"
+    },
+    {
+      "original": "driver (3).png",
+      "retainedOriginal": "driver (3).png",
+      "cleanFilename": "v04-driver.png",
+      "exactDuplicate": false,
+      "width": 1920,
+      "height": 720,
+      "sha256": "4d21563723edb166c350b2d4a23c8604b7d3ae6658e56ca9bb9414d2adf2f963"
+    },
+    {
+      "original": "passenger (6).png",
+      "retainedOriginal": "passenger (6).png",
+      "cleanFilename": "v05-passenger.png",
+      "exactDuplicate": false,
+      "width": 1920,
+      "height": 720,
+      "sha256": "341a5eff8dc6a122338373efabcc0cb10b5c23fc78a9cc66fa18270a608baa5a"
+    },
+    {
+      "original": "passenger.png",
+      "retainedOriginal": "passenger.png",
+      "cleanFilename": "v01-passenger.png",
+      "exactDuplicate": false,
+      "width": 1440,
+      "height": 620,
+      "sha256": "193061e6ac58ed1a48be7e28c314a2a19ec8ae044fc4a4d4aec5b7f254a47eaf"
+    },
+    {
+      "original": "passenger (1).png",
+      "retainedOriginal": "passenger (1).png",
+      "cleanFilename": "v02-passenger.png",
+      "exactDuplicate": false,
+      "width": 1920,
+      "height": 720,
+      "sha256": "010f998ba3ec6e7c18af1895219c3bce67d93d557100343db5cebe7505ae057b"
+    },
+    {
+      "original": "driver.png",
+      "retainedOriginal": "driver.png",
+      "cleanFilename": "v01-driver.png",
+      "exactDuplicate": false,
+      "width": 1440,
+      "height": 620,
+      "sha256": "f48c90e06672c41bc466a0acfad698349bbbd690a7690667ac1775211b31c7d4"
+    },
+    {
+      "original": "passenger (2).png",
+      "retainedOriginal": "passenger (2).png",
+      "cleanFilename": "v02-passenger-compact.png",
+      "exactDuplicate": false,
+      "width": 1920,
+      "height": 480,
+      "sha256": "28a74d2273cfd3d9ca456ac57146fba7c1331dcb93d45cf7394125e14f166553"
+    },
+    {
+      "original": "driver (1)(1).png",
+      "retainedOriginal": "driver (1).png",
+      "cleanFilename": "v02-driver.png",
+      "exactDuplicate": true,
+      "width": 1920,
+      "height": 720,
+      "sha256": "0e9645ac0476f1414d3986459d6da8a62c785ebaef1579c298981a851c062e3c"
+    },
+    {
+      "original": "driver (2)(1).png",
+      "retainedOriginal": "driver (2).png",
+      "cleanFilename": "v03-driver.png",
+      "exactDuplicate": true,
+      "width": 1920,
+      "height": 720,
+      "sha256": "22f51d9625b394055e6a4a12898f9ef5771c448637e9b907930039673e01d15f"
+    },
+    {
+      "original": "driver (4)(1).png",
+      "retainedOriginal": "driver (3).png",
+      "cleanFilename": "v04-driver.png",
+      "exactDuplicate": true,
+      "width": 1920,
+      "height": 720,
+      "sha256": "4d21563723edb166c350b2d4a23c8604b7d3ae6658e56ca9bb9414d2adf2f963"
+    },
+    {
+      "original": "driver(1).png",
+      "retainedOriginal": "driver.png",
+      "cleanFilename": "v01-driver.png",
+      "exactDuplicate": true,
+      "width": 1440,
+      "height": 620,
+      "sha256": "f48c90e06672c41bc466a0acfad698349bbbd690a7690667ac1775211b31c7d4"
+    },
+    {
+      "original": "passenger (4).png",
+      "retainedOriginal": "passenger (4).png",
+      "cleanFilename": "v04-passenger.png",
+      "exactDuplicate": false,
+      "width": 1920,
+      "height": 720,
+      "sha256": "256a5a23cf0f3d2edfa187da40af17274037039bb9179ef3647adf55d4708e2c"
+    },
+    {
+      "original": "passenger (5).png",
+      "retainedOriginal": "passenger (4).png",
+      "cleanFilename": "v04-passenger.png",
+      "exactDuplicate": true,
+      "width": 1920,
+      "height": 720,
+      "sha256": "256a5a23cf0f3d2edfa187da40af17274037039bb9179ef3647adf55d4708e2c"
+    },
+    {
+      "original": "driver (2).png",
+      "retainedOriginal": "driver (2).png",
+      "cleanFilename": "v03-driver.png",
+      "exactDuplicate": false,
+      "width": 1920,
+      "height": 720,
+      "sha256": "22f51d9625b394055e6a4a12898f9ef5771c448637e9b907930039673e01d15f"
+    },
+    {
+      "original": "passenger (3).png",
+      "retainedOriginal": "passenger (3).png",
+      "cleanFilename": "v03-passenger.png",
+      "exactDuplicate": false,
+      "width": 1920,
+      "height": 720,
+      "sha256": "ce3b0b1cf914b2f4a5eed3f08ce0ae5151246a6be5563f8c5871b2913ebaa5ad"
+    },
+    {
+      "original": "driver (3)(1).png",
+      "retainedOriginal": "driver (3).png",
+      "cleanFilename": "v04-driver.png",
+      "exactDuplicate": true,
+      "width": 1920,
+      "height": 720,
+      "sha256": "4d21563723edb166c350b2d4a23c8604b7d3ae6658e56ca9bb9414d2adf2f963"
+    },
+    {
+      "original": "driver (5).png",
+      "retainedOriginal": "driver (5).png",
+      "cleanFilename": "v05-driver.png",
+      "exactDuplicate": false,
+      "width": 1920,
+      "height": 720,
+      "sha256": "ed39c4685d2ff0c48be5c5d631185b9fe808230801b67ed702e79aa14ce0d85d"
+    }
+  ]
+}
