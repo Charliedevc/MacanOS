@@ -1,0 +1,26 @@
+MacanOS v0.6 desktop multi-display module
+Local branch: macanos/v0.6
+Commit: 13ff84b46bc4a0f6cf21d8ba6018de947a8d8be0
+No publication or merge.
+
+IMPORTANT: The supplied GitHub repository contained v0.5 reports only. This
+working module still requires integration with the original v0.5 source.
+Android/NaviRider compatibility is unverified. All vehicle, GPS, navigation
+and silent media data in this simulator is explicitly simulated.
+
+Open MacanOS-v0.6-Screenshots.html in a browser (images embedded; works offline).
+Open MacanOS-v0.6-Report.pdf, .docx or .html for validation and hardware findings.
+Extract MacanOS-v0.6-Source.zip for source, README, tests and individual PNGs.
+Qt 6.7+, CMake, Ninja and a C++17 compiler are required; see README.md.
+
+To restore the Git history instead:
+  git clone -b macanos/v0.6 MacanOS-v0.6.git.bundle MacanOS
+
+From the extracted source or cloned bundle:
+  cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=RelWithDebInfo
+  cmake --build build --parallel 4
+  python3 scripts/run-simulator.py
+
+Actual final tests: 12 coordinator + 6 layout cases + 12 process tests passed.
+Existing v0.5 regressions, Android APK, physical displays and vehicle tests
+could not run. See docs/VALIDATION-v0.6.md for exact limitations.

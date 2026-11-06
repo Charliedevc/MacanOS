@@ -1,0 +1,9 @@
+{
+  "commit": "13ff84b46bc4a0f6cf21d8ba6018de947a8d8be0",
+  "branch": "macanos/v0.6",
+  "baseline": "cefde60 (documentation only)",
+  "originalV05Integrated": false,
+  "published": false,
+  "merged": false,
+  "testCasesPassed": 30
+}

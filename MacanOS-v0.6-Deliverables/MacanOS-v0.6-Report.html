@@ -1,0 +1,960 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>MacanOS v0.6 Engineering Report</title>
+  <style>
+    html {
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      html {
+        background-color: white;
+      }
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    svg {
+      height: auto;
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      background-color: #1a1a1a;
+      border: none;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+    /* CSS for syntax highlighting */
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { color: #008000; } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { color: #008000; font-weight: bold; } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">MacanOS v0.6 Engineering Report</h1>
+</header>
+<nav id="TOC" role="doc-toc">
+<ul>
+<li><a href="#macanos-v0.6-engineering-and-hardware-report"
+id="toc-macanos-v0.6-engineering-and-hardware-report">MacanOS v0.6 —
+engineering and hardware report</a></li>
+<li><a href="#macanos-v0.6-validation"
+id="toc-macanos-v0.6-validation">MacanOS v0.6 validation</a>
+<ul>
+<li><a href="#actual-final-results" id="toc-actual-final-results">Actual
+final results</a></li>
+<li><a href="#failures-found-and-fixed"
+id="toc-failures-found-and-fixed">Failures found and fixed</a></li>
+<li><a href="#limitations-and-unfinished-integration"
+id="toc-limitations-and-unfinished-integration">Limitations and
+unfinished integration</a></li>
+<li><a href="#recommended-next-milestone"
+id="toc-recommended-next-milestone">Recommended next milestone</a></li>
+</ul></li>
+<li><a href="#multi-display-hardware-compatibility-report"
+id="toc-multi-display-hardware-compatibility-report">Multi-display
+hardware compatibility report</a>
+<ul>
+<li><a href="#evidence-matrix" id="toc-evidence-matrix">Evidence
+matrix</a></li>
+<li><a href="#android-api-findings"
+id="toc-android-api-findings">Android API findings</a></li>
+<li><a href="#recommended-architecture-decision"
+id="toc-recommended-architecture-decision">Recommended architecture
+decision</a></li>
+<li><a href="#exact-bench-evidence-required"
+id="toc-exact-bench-evidence-required">Exact bench evidence
+required</a></li>
+</ul></li>
+<li><a href="#macanos-v0.6-display-coordinator"
+id="toc-macanos-v0.6-display-coordinator">MacanOS v0.6 display
+coordinator</a>
+<ul>
+<li><a href="#runtime-modes" id="toc-runtime-modes">Runtime
+modes</a></li>
+<li><a href="#mode-and-failure-state-machine"
+id="toc-mode-and-failure-state-machine">Mode and failure state
+machine</a></li>
+<li><a href="#geometry-and-touch" id="toc-geometry-and-touch">Geometry
+and touch</a></li>
+<li><a href="#state-and-animation-synchronization"
+id="toc-state-and-animation-synchronization">State and animation
+synchronization</a></li>
+<li><a href="#protocol-and-safety-boundary"
+id="toc-protocol-and-safety-boundary">Protocol and safety
+boundary</a></li>
+<li><a href="#integration-work-still-required"
+id="toc-integration-work-still-required">Integration work still
+required</a></li>
+</ul></li>
+<li><a href="#installation-and-operation"
+id="toc-installation-and-operation">Installation and operation</a>
+<ul>
+<li><a href="#three-processes" id="toc-three-processes">Three
+processes</a></li>
+<li><a href="#runtime-controls" id="toc-runtime-controls">Runtime
+controls</a></li>
+<li><a href="#persistence-and-recovery"
+id="toc-persistence-and-recovery">Persistence and recovery</a></li>
+</ul></li>
+</ul>
+</nav>
+<h1 id="macanos-v0.6-engineering-and-hardware-report">MacanOS v0.6 —
+engineering and hardware report</h1>
+<p>New desktop multi-display integration module. Source baseline:
+documentation-only commit cefde60. Original v0.5 application
+unavailable. No publication or merge.</p>
+<hr />
+<h1 id="macanos-v0.6-validation">MacanOS v0.6 validation</h1>
+<p>Date: 2026-11-05. Platform: Debian 13 x86_64, GCC 14.2, CMake 4.4.4,
+Ninja 1.13.2, Qt 6.8.2. GUI rendering used
+<code>QT_QPA_PLATFORM=offscreen</code> and the Qt Quick software
+backend. These are executable desktop simulator results, not original
+v0.5 or vehicle results.</p>
+<h2 id="actual-final-results">Actual final results</h2>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Check</th>
+<th>Executed result</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>CMake configure and C++17 build</td>
+<td>Passed; client, server, coordinator library and two QtTest targets
+built.</td>
+</tr>
+<tr class="even">
+<td>Coordinator QtTest suite</td>
+<td>12 test methods passed; 14 reported passes including
+initialization/cleanup; no failures/skips.</td>
+</tr>
+<tr class="odd">
+<td>QML layout QtTest suite</td>
+<td>Six role/resolution cases passed; eight reported passes including
+initialization/cleanup. Actual mouse clicks selected apps; all visible
+action targets were at least 44 DIP and inside the window; primary panel
+width was checked.</td>
+</tr>
+<tr class="even">
+<td>Multi-process Python suite</td>
+<td>12 tests passed in 44.196 seconds; actual server and frontend
+executables, no mock frontend.</td>
+</tr>
+<tr class="odd">
+<td>Python compilation and shell syntax</td>
+<td>Passed for supplied Python scripts/tests and
+<code>scripts/check.sh</code>.</td>
+</tr>
+<tr class="even">
+<td>Screenshots</td>
+<td>Ten actual Qt <code>grabWindow()</code> captures, including both
+roles for all three modes, unified media, and two additional passenger
+resolutions.</td>
+</tr>
+<tr class="odd">
+<td>Existing v0.5 tests</td>
+<td><strong>Blocked:</strong> source, test suite and recorded commit
+absent from the supplied repository. No regression success claimed.</td>
+</tr>
+<tr class="even">
+<td>Android, ARM64 or physical hardware tests</td>
+<td><strong>Not executed:</strong> no Android toolchain/device or ARM64
+target, physical head unit, two outputs or touch controllers.</td>
+</tr>
+</tbody>
+</table>
+<p>There are <strong>30 final test cases excluding Qt
+initialization/cleanup</strong>: 12 coordinator + six layout cases + 12
+process cases. The raw logs and machine-readable summary are in
+<code>docs/test-results/</code>.</p>
+<p>Coordinator coverage includes all directed mode transitions, mode
+persistence, explicit resume after loss, expiry, output availability,
+role ownership, distinct output requirements, mixed dimensions/scales,
+bezel offsets, calibrated touch, transition-generation rejection,
+renderer limits, scheduled transitions, corrupt/unwritable settings,
+geometry-change fallback and shared-focus persistence.</p>
+<p>Process coverage includes all six directed transitions with unchanged
+backend PID/session, independent app state, shared focus, synchronized
+media and driver-approved destinations, output-presence simulation,
+passenger process termination, driver-process shutdown, survivor
+operation, reconnect, backend silence/restart, retained mode settings,
+prohibited commands, duplicate-role rejection, timing estimates,
+1920×720 and 1920×1080 passenger viewports, touch-coordinate protocol
+and offline initial startup. Recovered displays require explicit resume
+after a live session loss. Backend restart instead reloads saved
+settings when both clients register.</p>
+<p>Clock evidence records each client’s measured half-RTT uncertainty
+and the same transition schedule/session. It is not a frame-lock or
+real-panel latency measurement. State files are sampled independently;
+their timestamps need not be identical. Screenshots are sequential
+captures, not proof of simultaneous physical refresh.</p>
+<h2 id="failures-found-and-fixed">Failures found and fixed</h2>
+<p>The initial real-process run passed seven of nine tests and failed
+two: tests observed command-file consumption before the backend’s
+response and state propagation. The client now records acknowledged
+command results and the harness waits for them. Successful heartbeat
+replies no longer erase visible operation errors. Both failures passed
+in subsequent runs; the initial failure log is retained as
+<code>initial-failures-resolved.log</code>.</p>
+<p>Visual inspection also found a collapsed navigation panel caused by
+layout minimum sizing. Explicit side-column constraints fixed it. Qt
+layout tests now assert that the primary panel stays usable and that
+touch targets remain visible, bounded and at least 44 DIP across the six
+tested role/resolution combinations.</p>
+<p>Other hardening includes duplicate-owner rejection, stale-generation
+touch rejection, affine pixel-centre mapping at rotated display edges,
+explicit resume after geometry changes, bounded JSON frames/output
+queues and peer count, cleanup of signal connections at server exit, and
+local ownership validation before backend actions.</p>
+<p>The development host initially lacked CMake/Ninja and Qt headers.
+CMake/Ninja were installed into a workspace prefix; matching Debian Qt
+development packages were downloaded/extracted into another workspace
+prefix, using the installed matching runtime. Initial configure failures
+for missing runtime/OpenGL links were corrected in that local prefix.
+Nothing was installed into the host’s system directories.</p>
+<p>Final configuration emitted optional XKB and QML static-plugin
+link-target warnings due to that extracted development prefix. Dynamic
+QML runtime imports succeeded; all GUI tests and screenshots executed
+without ReferenceError, TypeError, binding-assignment or engine-load
+errors. Runtime tests establish successful software rendering only. The
+standard Debian dependency installation in the README avoids relying on
+the workspace-specific toolchain paths.</p>
+<h2 id="limitations-and-unfinished-integration">Limitations and
+unfinished integration</h2>
+<ul>
+<li><code>cefde60</code> contains reconstructed reports only. The
+missing original v0.5 UI, SQLite trips, map/routing, real audio adapter
+and read-only diagnostic enforcement have not been modified or tested.
+This module does not prove preservation of those features.</li>
+<li>Its JSON TCP protocol is local to this module; an adapter to the
+actual OCTAVE API remains to be implemented against recovered source.
+There is no WebSocket transport here.</li>
+<li>All route, GPS, trip and vehicle figures are fixtures; the map is an
+original schematic. Shared destination approval is functional
+simulation, not tested turn-by-turn navigation. Media playback
+synchronizes state but produces no audible output.</li>
+<li>Mode settings and local app choices persist; fixture
+navigation/media state resets with backend restart. v0.5 SQLite or media
+persistence is not implemented by this module.</li>
+<li>Physical Qt screen selection/removal hooks are prepared. Output
+disappearance was simulated through the presence file; actual connector
+removal, compositor behavior, hardware DPI and touch routing are
+unverified.</li>
+<li>Logical canvas clipping duplicates scene rendering in each client.
+No GPU, thermal, refresh-phase or sustained performance benchmark was
+executed. There is no guarantee of visually seamless panel color,
+geometry or timing.</li>
+<li>Simulator sizes are not NaviRider specifications. Android secondary
+display/presentation/HOME APIs were researched, not executed. No APK or
+launcher was built.</li>
+<li>Factory Porsche systems, controls, electrical interfaces, security
+and vehicle modules were not accessed. Backend vehicle commands are
+absent and unknown operations are denied. Existing v0.5 restrictions
+must be regression-tested after source restoration.</li>
+</ul>
+<h2 id="recommended-next-milestone">Recommended next milestone</h2>
+<p>Recover the actual v0.5 source checkout or Git bundle, establish a
+passing baseline, embed one coordinator into its backend and reuse its
+real navigation/media services. Then test an authorized Android device
+exposing two independent displays before evaluating any NaviRider
+purchase. Keep the original vehicle and factory control interfaces
+outside this work.</p>
+<hr />
+<h1 id="multi-display-hardware-compatibility-report">Multi-display
+hardware compatibility report</h1>
+<p>Research date: 2026-11-05. <strong>No NaviRider unit, Android APK,
+ARM64 build or physical dual-display installation was tested.</strong>
+Desktop results apply only to the supplied C++17/Qt 6.8.2 Linux
+simulator. The repository supplied for this work contains reconstructed
+v0.5 documentation, not its application source.</p>
+<h2 id="evidence-matrix">Evidence matrix</h2>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Capability</th>
+<th>Evidence category</th>
+<th>Result and missing evidence</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Two independent QML processes, one coordinator</td>
+<td>Desktop verified</td>
+<td>Mode switching, isolated app selection, shared session, kill/restart
+and backend recovery tested over loopback.</td>
+</tr>
+<tr class="even">
+<td>Panoramic canvas without one framebuffer</td>
+<td>Desktop verified</td>
+<td>Separate clipped viewports with logical bezel gap; 1280×480,
+1920×720 and 1920×1080 simulator renderings. These are test sizes, not
+verified panel specifications.</td>
+</tr>
+<tr class="odd">
+<td>Different display sizes / DPI / rotated touch</td>
+<td>Desktop verified in simulation</td>
+<td>Geometry and affine mapping unit tests. No physical touch
+controller, EDID, connector hotplug or calibration verified.</td>
+</tr>
+<tr class="even">
+<td>Physical 12.3-inch dual-screen configuration</td>
+<td>User-described candidate</td>
+<td>Exact seller SKU, panel dimensions, motherboard, SoC, ABI, Android
+API, firmware build and refresh rates remain unknown. A marketing
+picture or “dual screen” description is insufficient.</td>
+</tr>
+<tr class="odd">
+<td>Android sees two accessible displays</td>
+<td>Unknown for NaviRider</td>
+<td>Need DisplayManager enumeration with IDs, flags, metrics and
+independent content on each panel. The second panel could use an MCU,
+private surface or vendor-only app.</td>
+</tr>
+<tr class="even">
+<td>Third-party APK on each panel</td>
+<td>Unknown for NaviRider</td>
+<td>Need installation and display-targeted launch evidence for two role
+clients, followed by kill/recovery and touch-routing tests.</td>
+</tr>
+<tr class="odd">
+<td>Android Presentation</td>
+<td>Platform API documented; device unverified</td>
+<td>Presentation-compatible displays must be exposed and usable by the
+app. This does not imply that two head-unit panels are eligible.</td>
+</tr>
+<tr class="even">
+<td>Secondary activity launch</td>
+<td>Platform API documented; device unverified</td>
+<td>API 26+ launch display targeting is conditional on system features
+and launch permissions. Manufacturer policy may prohibit it.</td>
+</tr>
+<tr class="odd">
+<td>Launcher / automatic startup</td>
+<td>Platform API documented; device unverified</td>
+<td>HOME role is user granted where available; boot, background start
+and OEM restrictions require testing. No firmware replacement is
+required in principle, but success is not established.</td>
+</tr>
+<tr class="even">
+<td>HDMI/USB-C video input, dual external video paths</td>
+<td>Unknown</td>
+<td>Need pinout and an actual input demonstration. HDMI output is not
+HDMI input. No external Linux-to-NaviRider video compatibility is
+assumed.</td>
+</tr>
+<tr class="odd">
+<td>USB touchscreen endpoints and per-display input routing</td>
+<td>Unknown</td>
+<td>Need USB descriptors, Android input-device/display associations,
+touch test on each panel and repeat after reboot.</td>
+</tr>
+<tr class="even">
+<td>Factory PCM / CAN decoder / camera / parking / steering
+controls</td>
+<td>Unknown for exact unit</td>
+<td>Need wiring diagrams and a bench/installer demonstration that
+factory functions remain available. MacanOS adds no factory-control
+commands.</td>
+</tr>
+<tr class="odd">
+<td>Standard factory audio, MOST or JL Audio DSP integration</td>
+<td>Unknown / outside this module</td>
+<td>No audible audio was tested in v0.6. The existing bass fault is
+unresolved and no amplifier remedy is asserted.</td>
+</tr>
+<tr class="even">
+<td>Clock synchronization across physical panels</td>
+<td>Unverified</td>
+<td>Shared time scheduling is desktop tested; refresh phase, latency,
+density, compositor and thermal performance are not. No frame-lock
+claim.</td>
+</tr>
+</tbody>
+</table>
+<p>No new seller specification has been independently verified. The
+historical AliExpress short link does not identify a stable, verified
+hardware revision for this report. Seller-advertised specifications from
+another SKU must not be carried over as facts.</p>
+<h2 id="android-api-findings">Android API findings</h2>
+<p><a
+href="https://developer.android.com/reference/android/hardware/display/DisplayManager">DisplayManager</a>
+enumerates logical displays and provides display-change listeners.
+Enumerate all displays, not just presentation candidates; record IDs,
+density and flags. A physical panel is not necessarily an app-accessible
+logical display. Android IDs may change across boot, so roles need a
+verified stable association rather than hardcoded IDs.</p>
+<p><a
+href="https://developer.android.com/reference/android/app/Presentation">Presentation</a>
+is a dialog on a secondary display, with resources/density derived from
+that display. It can be cancelled when the display or hosting task
+disappears; handle dismissal and invalid-display exceptions. Current
+documentation allows presentation-flagged internal displays starting
+with Android 16; older versions restrict internal presentation targets.
+A Presentation shares its hosting application’s lifecycle and process,
+so it is not sufficient by itself for MacanOS frontend crash
+isolation.</p>
+<p><a
+href="https://developer.android.com/reference/android/app/ActivityOptions#setLaunchDisplayId(int)">ActivityOptions.setLaunchDisplayId</a>
+was added in API 26. It targets permitted displays; the setting is
+ignored if secondary-display activities are unsupported. Public/owned
+display rules and launch permissions apply. Check <a
+href="https://developer.android.com/reference/android/app/ActivityManager#isActivityStartAllowedOnDisplay(android.content.Context,int,android.content.Intent)">ActivityManager.isActivityStartAllowedOnDisplay</a>
+where available, and handle denial. Two activities can still share one
+process; independent failure domains require a tested process
+arrangement, potentially separate application packages. Separate Qt
+runtimes in one Android package have not been implemented or validated
+here.</p>
+<p><a
+href="https://developer.android.com/reference/android/app/role/RoleManager#ROLE_HOME">RoleManager.ROLE_HOME</a>,
+available from API 29, supports a user-approved HOME role request where
+that role is available. A launcher needs appropriate HOME intent
+handling. This does not grant privileged display access,
+kiosk/device-owner rights, immunity from background restrictions or
+control of reverse-camera overlays. Older systems use their default-HOME
+mechanism. Do not alter vendor firmware, device policy or security
+protections to force compatibility.</p>
+<p>Qt’s <a
+href="https://doc.qt.io/qt-6/qml-qtquick-window.html">Window/screen
+APIs</a> describe screen selection, but desktop
+<code>QWindow::setScreen()</code> success is not proof of Android
+platform-plugin support on this head unit. An Android port needs a
+matching Qt Android toolchain and an actual test of native
+window/activity/presentation hosting. No Android SDK, NDK, Qt Android
+kit, Java compiler or ADB executable is available on this development
+host; no APK was built.</p>
+<h2 id="recommended-architecture-decision">Recommended architecture
+decision</h2>
+<p><strong>Buy no head unit on the strength of its “dual-screen”
+label.</strong> Require a returnable bench sample or seller evidence
+that two ordinary third-party applications can render independently,
+receive their own touch input, survive one client stopping and retain
+factory camera/PCM operation. If only mirroring or a private OEM surface
+is exposed, all three MacanOS modes cannot be promised on those two
+panels.</p>
+<p>Prefer Android-native deployment only after that test succeeds. Keep
+one shared backend owner; attach two role clients to it. If an external
+Linux system is needed, prefer a mature dual-output Linux board and
+independently documented display/input hardware. Raspberry Pi 5 is a
+conditional bench candidate, not proof that it can drive NaviRider. A
+compositor such as Wayland is the more practical starting point for
+separate frontend processes on two outputs; do not assume two EGLFS
+processes can concurrently own the same DRM device.</p>
+<p>UNIFIED is implemented at the application viewport level, so separate
+display controllers are acceptable <strong>if</strong> both expose
+independent render and input paths. Physical continuity still requires
+measured dimensions, bezel gap, density, color/brightness and latency
+calibration. SHARED and INDEPENDENT need the same independently
+addressable display prerequisite; software fallback cannot create a
+missing output path.</p>
+<h2 id="exact-bench-evidence-required">Exact bench evidence
+required</h2>
+<ol type="1">
+<li>Seller SKU, motherboard revision, SoC and ABI, real API level and
+firmware build, panel pixel resolutions/refresh, wiring and recovery
+documentation.</li>
+<li>Authorized, read-only Android enumeration:
+<code>scripts/probe-android.py --serial DEVICE --output evidence.json</code>.
+This tool is prepared but unexecuted; it does not unlock, root, change
+policy or launch controls. Review raw input/display data before sharing
+it.</li>
+<li>Independent role content on each accessible display; HOME selection
+and reboot behavior; touch on each panel; one client killed without the
+other stopping; repeated display disconnect/reconnect.</li>
+<li>Run the three mode transitions, native-density geometry and bezel
+calibration, sunlight/night tests, and continuous visualization while
+measuring CPU/GPU, memory and temperature. Verify that the compositor
+does not mirror or override content.</li>
+<li>Confirm vendor reverse-camera/parking/factory audio behavior with
+the manufacturer/installer. Do not attach this simulator to factory
+control modules. Electrical power and ignition integration need a
+separate automotive design and shutdown test.</li>
+</ol>
+<p>Until these gates pass, the purchase decision remains conditional.
+The next software milestone is to restore v0.5 source, embed this
+coordinator there, and test an authorized Android bench device; it is
+not a vehicle installation milestone.</p>
+<hr />
+<h1 id="macanos-v0.6-display-coordinator">MacanOS v0.6 display
+coordinator</h1>
+<p>This is a new, executable integration module on
+<code>macanos/v0.6</code>, based on the documentation-only repository
+commit <code>cefde60</code>. The supplied repository has two historical
+commits and no v0.5 application source. It does not contain the recorded
+v0.5 commit <code>d6a19ad</code>. No OCTAVE source, existing UI, audio
+output, map renderer, database or diagnostics implementation has been
+replaced or regression-tested. The module must still be integrated when
+that baseline is recovered.</p>
+<pre class="mermaid"><code>flowchart TB
+    D[Driver process / independent QML engine] &lt;--&gt;|Loopback JSON TCP| S[Simulator server / one DisplayCoordinator]
+    P[Passenger process / independent QML engine] &lt;--&gt;|Loopback JSON TCP| S
+    S --&gt; M[Atomic mode-settings JSON]
+    S --&gt; F[Explicit navigation, media and telemetry fixtures]
+    D --&gt; V1[Clipped viewport A]
+    P --&gt; V2[Clipped viewport B]
+    V1 --&gt; C[One mathematical canvas / no shared framebuffer]
+    V2 --&gt; C
+    O[Recovered OCTAVE backend / unavailable] -. future embedding .-&gt; S</code></pre>
+<h2 id="runtime-modes">Runtime modes</h2>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Mode</th>
+<th>App selection and layout</th>
+<th>Shared state</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>INDEPENDENT</td>
+<td>Each process persists its own Navigation/Media selection in a
+separate INI file. Driver prioritizes speed/status; passenger
+prioritizes media/journey.</td>
+<td>Both subscribe to the same model. Independent layouts do not create
+device connections.</td>
+</tr>
+<tr class="even">
+<td>UNIFIED</td>
+<td>Each process draws a clipped viewport of a common logical scene.
+Navigation schematic and procedural media visualization span both
+screens. Headers and controls remain local.</td>
+<td>Scene, route, media, canvas dimensions, transition generation and
+animation epoch.</td>
+</tr>
+<tr class="odd">
+<td>SHARED</td>
+<td>Selecting Navigation or Media changes shared focus; driver and
+passenger retain role-specific arrangements.</td>
+<td>Destination approval, metadata, play/pause, track, volume, shared
+focus and transitions.</td>
+</tr>
+</tbody>
+</table>
+<p>These Navigation/Media applications are QML modules within each
+separate client executable. This prototype does not launch arbitrary
+Android applications. Its schematic route, journey numbers, GPS and
+speed are explicitly simulated fixtures. Its media playback state is
+silent; it does not replace v0.5 audio playback or navigation.</p>
+<h2 id="mode-and-failure-state-machine">Mode and failure state
+machine</h2>
+<p><code>requestedMode</code> is stored atomically in a schema-versioned
+JSON file. <code>effectiveMode</code> reflects actual display
+availability. Both registered, healthy processes and distinct output IDs
+are required for coordinated modes. Each role has one TCP-connection
+owner; another healthy owner cannot take it over.</p>
+<p>A disconnected socket triggers immediate fallback to INDEPENDENT on
+the survivor. Heartbeats run every 250 ms, with backend expiry at 1,800
+ms. A client treats a silent server as stale after 1,200 ms and switches
+locally to INDEPENDENT; after 3,000 ms it reconnects. Reconnection backs
+off between 100 and 3,000 ms. The last model remains visibly stale and
+actions are unavailable offline.</p>
+<p>After an active coordinated session loses a display,
+<code>resumeRequired</code> latches: the saved preference survives, but
+reconnecting alone does not cause an unexpected panorama. Explicitly
+selecting that mode resumes it. At cold backend startup, a saved mode
+activates when both displays first register. A geometry change during a
+coordinated session, or a bezel change during UNIFIED, also requires
+explicit resume. Unsupported geometry or duplicate output identities
+prevent UNIFIED. Manual INDEPENDENT selection and safety fallback can
+interrupt a scheduled transition.</p>
+<p>The backend does not restart during mode switches. Each frontend owns
+its own engine/window/event loop. Closing or killing one leaves the
+other and the backend alive. The launcher intentionally allows a
+frontend to remain closed; it stops the session when both clients exit.
+Production supervision must be attached to the recovered v0.5 deployment
+system.</p>
+<h2 id="geometry-and-touch">Geometry and touch</h2>
+<p>Native dimensions divided by configured scale give logical DIP.
+Displays are top aligned, with driver first and passenger at
+<code>driverWidthDip + bezelGapDip</code>. Unequal heights leave an
+unused logical area rather than stretching content. The bezel is a
+logical gap, not a verified millimetre measurement. A physical
+calibration is required before translating bezel dimensions to DIP.</p>
+<p>Each client has an independently clipped QML scene translated by its
+viewport origin. No combined OS desktop, physical framebuffer, video
+input or shared GPU surface is required. The panorama implementation
+uses a full logical scene in each process and clipping, so it duplicates
+rendering work; it is not a GPU-optimized tiled renderer. Canvas limits
+are 8192 × 2160 DIP. Actual use on two 12.3-inch panels requires GPU and
+thermal measurements.</p>
+<p>Touch profiles contain a normalized 2×3 affine matrix. Native pixel
+centres are transformed, scaled to local DIP, then offset into the
+global canvas in UNIFIED. The bezel consumes logical distance but has no
+input surface. Invalid, outside, unavailable, wrong-owner,
+stale-generation and mid-transition touches are rejected.
+<code>touch-identity.json</code> and <code>touch-rotate-180.json</code>
+are examples. This is application coordinate mapping, not OS calibration
+or verified Android touch routing. Panoramic taps exercise coordinate
+reporting; they do not implement map panning or zoom gestures.</p>
+<p><code>--screen</code> binds to a Qt-enumerated physical output and
+handles Qt screen removal/reappearance. Without it, two desktop windows
+use explicit simulator output IDs; this does not prove that the host has
+two physical displays. Presence-file tests simulate output
+disappearance. Physical connector hotplug and Android display routing
+have not been tested. Resize changes are re-registered after a 150 ms
+debounce.</p>
+<h2 id="state-and-animation-synchronization">State and animation
+synchronization</h2>
+<p>Every snapshot includes server session UUID, monotonic server time,
+revision, transition generation, scheduled start, duration, logical
+geometry and one shared model. The backend schedules transitions 200 ms
+ahead with a 420 ms fade. Clients use ping midpoint estimates of clock
+offset and expose measured half-RTT uncertainty. Both QML scenes derive
+fade progress and visualization phase from this server epoch, rather
+than starting unrelated animations when a message arrives.</p>
+<p>This is coordinated timing, not physical frame lock. The loopback
+simulator measures low RTT; scheduling jitter, compositor refresh,
+Android suspension and asymmetric network delay remain limitations. A
+late snapshot advances directly to the current phase. Input is rejected
+during transitions to avoid mapping a tap onto a different scene
+generation.</p>
+<h2 id="protocol-and-safety-boundary">Protocol and safety boundary</h2>
+<p>The simulator uses bounded, newline-delimited JSON over IPv4
+loopback. Requests have <code>id</code>, <code>op</code>,
+<code>args</code>; replies have <code>id</code>, <code>ok</code>,
+<code>result</code>, <code>error</code>. Server events are
+<code>{ "event": "state", "value": ... }</code>. Supported operations
+are <code>getState</code>, <code>ping</code>, <code>register</code>,
+<code>heartbeat</code>, <code>setMode</code>, <code>setSharedApp</code>,
+<code>setUnifiedScene</code>, <code>setBezelGap</code>,
+<code>touch</code>, and the fixture <code>model</code> command
+whitelist.</p>
+<p>This is the new module’s protocol, not a verified implementation of
+the unavailable OCTAVE JSON TCP/WebSocket contract. It is loopback-only,
+without remote authentication or TLS. Any local process can read state;
+role ownership prevents accidental duplicate display owners but is not
+an authentication mechanism. Do not expose the listener to a vehicle
+network or remote network without designing authentication and transport
+security.</p>
+<p>No vehicle port, OBD session, CAN connection, factory-control API or
+real audio device is opened. Unsupported commands—including DTC
+clearing—are rejected by the backend dispatcher, not just hidden in QML.
+Display mode and fixture media actions cannot create extra OBD sessions.
+The existing v0.5 read-only enforcement cannot be inspected until its
+source is restored.</p>
+<h2 id="integration-work-still-required">Integration work still
+required</h2>
+<ol type="1">
+<li>Restore the actual v0.5 source and build/test it unchanged.</li>
+<li>Add <code>displaycoordinator</code> to the existing backend and own
+one instance there. Remove the standalone simulator server from
+production launch; do not create another telemetry owner.</li>
+<li>Map coordinator registration/heartbeat and state onto the real
+OCTAVE API using its actual permission model. Preserve existing backend
+prohibitions and add DTC/write-command regression tests against it.</li>
+<li>Replace <code>FixtureModel</code> with subscriptions to existing
+navigation, media and telemetry services. Preserve the existing
+passenger proposal/driver approval contract, trip SQLite storage and
+audio ownership.</li>
+<li>Embed the viewport/clock logic in the recovered driver/passenger QML
+designs. This module’s original dark QML screens are test fixtures, not
+a recovered or redesigned v0.5 interface.</li>
+<li>Run all existing v0.5 regressions plus the v0.6 suites and physical
+output/touch tests. Roll back to the untouched restored v0.5 baseline if
+integration fails.</li>
+</ol>
+<hr />
+<h1 id="installation-and-operation">Installation and operation</h1>
+<p>Follow the root README build commands. This package includes source
+and test evidence, not portable prebuilt binaries. Qt development and
+runtime components must come from compatible installations. Qt 6.7+ is
+required. Debian 13/Qt 6.8.2 was used here; older distributions may need
+a separately installed Qt kit and <code>CMAKE_PREFIX_PATH</code>.</p>
+<h2 id="three-processes">Three processes</h2>
+<p>The convenience launcher uses one server and two separately spawned
+client executables. For manual launch, run these in separate terminals
+from the repository root:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">./build/macanos-display-server</span> <span class="at">--port</span> 45670 <span class="at">--settings</span> .runtime/modes.json</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="ex">./build/macanos-display-client</span> <span class="at">--role</span> driver <span class="at">--port</span> 45670 <span class="at">--settings</span> .runtime/driver.ini</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="ex">./build/macanos-display-client</span> <span class="at">--role</span> passenger <span class="at">--port</span> 45670 <span class="at">--settings</span> .runtime/passenger.ini</span></code></pre></div>
+<p>The server listens only on IPv4 loopback. There is no remote/LAN
+transport in this module. No OBD, GNSS, CAN, factory audio or vehicle
+control device is opened. Do not start this as a replacement for an
+installed v0.5 backend; it is an isolated simulator.</p>
+<p>For configured 1920×720 simulator windows:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> scripts/run-simulator.py <span class="at">--width</span> 1920 <span class="at">--height</span> 720</span></code></pre></div>
+<p>For two physical Qt outputs, after confirming their Qt screen
+indices:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> scripts/run-simulator.py <span class="at">--driver-screen</span> 0 <span class="at">--passenger-screen</span> 1 <span class="at">--fullscreen</span></span></code></pre></div>
+<p>Physical output use is prepared, not verified. The current simulator
+validates 1280×480, 1920×720 and 1920×1080 logical windows. Other aspect
+ratios and smaller windows may need further layout work. Qt’s compositor
+determines actual window size and output density; a fullscreen resize
+re-registers the resulting dimensions. Avoid assuming the candidate
+NaviRider exposes two Qt screens.</p>
+<p>A client accepts <code>--width</code>, <code>--height</code> in
+native pixels and <code>--scale</code> in pixels/DIP. For a 1920×720
+configured surface at scale 1.5, the logical viewport is 1280×480.
+<code>--touch-profile config/touch-rotate-180.json</code> loads an
+affine profile. Match the scale to the verified output configuration.
+Profiles do not reroute OS input devices or calibrate physical
+hardware.</p>
+<h2 id="runtime-controls">Runtime controls</h2>
+<p>Both windows have mode and Navigation/Media buttons. Mode changes are
+scheduled on the shared server clock. Buttons are disabled during
+incompatible transitions; INDEPENDENT can always interrupt while
+connected. The read-only server boundary is unchanged by mode
+selection.</p>
+<p>The launcher also exposes optional command files:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> scripts/control.py setMode UNIFIED</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> scripts/control.py localApp media</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> scripts/control.py setUnifiedScene navigation</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> scripts/control.py setBezelGap 30</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> scripts/control.py <span class="at">--role</span> driver screenshot /tmp/macanos-driver.png</span></code></pre></div>
+<p>A bezel change in active UNIFIED falls back to INDEPENDENT until
+explicitly resumed. A logical gap is not a millimetre calibration.
+Desktop UNIFIED has local headers over the shared scene; it
+intentionally avoids placing essential controls inside the bezel.</p>
+<p>To simulate loss of the passenger output while retaining its
+process:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> <span class="at">-c</span> <span class="st">&#39;import json,pathlib; pathlib.Path(&quot;.runtime/presence.json&quot;).write_text(json.dumps({&quot;driver&quot;: True, &quot;passenger&quot;: False}))&#39;</span></span></code></pre></div>
+<p>Set <code>passenger</code> back to <code>true</code> or remove that
+file to restore it. Select the saved mode explicitly after recovery.
+Closing one frontend or killing its process exercises a separate failure
+path. The backend process does not restart during either operation.</p>
+<h2 id="persistence-and-recovery">Persistence and recovery</h2>
+<ul>
+<li><code>modes.json</code>: schema 1, requested mode, shared app,
+unified scene and logical bezel gap; written with QSaveFile atomic
+replacement. Invalid settings start with INDEPENDENT defaults and an
+error indication.</li>
+<li><code>driver.ini</code> / <code>passenger.ini</code>: independent
+Navigation/Media selections. These are separate local states, even while
+a coordinated mode is active.</li>
+<li>Diagnostic JSON includes mode, availability, PID, clock uncertainty,
+last command result and latest backend snapshot. It is simulator
+instrumentation, not production vehicle logging.</li>
+<li>Fixture route/media/telemetry state resets with the simulator
+backend. This does not implement or test v0.5 trip/media
+persistence.</li>
+</ul>
+<p>If the backend restarts, clients reconnect and register on its new
+session UUID. The saved mode becomes active after both register. If one
+display disappeared during a running coordinated session, returning does
+not automatically resume it. A live geometry change also requires
+explicit resume.</p>
+<p>No global installation or system service is installed by these
+scripts. To roll back this local module, stop its processes and check
+out <code>cefde60</code>; keep <code>.runtime</code> separately if
+settings are needed. That rollback returns to documentation only, not
+the absent working v0.5 application.</p>
+</body>
+</html>
