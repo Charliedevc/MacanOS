@@ -1,23 +1,39 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 import QtQuick
+import "Theme.js" as Theme
 Rectangle {
  id: control
  objectName: "action"
  property string label: ""
  property bool selected: false
  property bool compact: false
+ property bool narrow: false
+ property bool motionEnabled: typeof simulatorReducedMotion === "undefined" || !simulatorReducedMotion
+ property string accessibleLabel: label
  signal activated()
- implicitWidth: Math.max(compact ? 88 : 116, text.implicitWidth + 28)
- implicitHeight: 44
+ implicitWidth: Math.max(narrow ? 48 : compact ? 72 : 100, text.implicitWidth + (narrow ? 16 : 24))
+ implicitHeight: Theme.touch
  radius: 10
- color: tap.pressed ? "#38252a" : selected ? "#3a2228" : "#1e2329"
- border.color: selected ? "#e46270" : "#363d47"
+ color: tap.pressed ? Theme.pressed : selected ? Theme.selected : Theme.control
+ border.color: selected ? Theme.accent : "#363d47"
+ Behavior on color { enabled: control.motionEnabled; ColorAnimation { duration: 110 } }
  border.width: 1
- opacity: enabled ? 1 : 0.4
+ opacity: enabled ? 1 : 0.65
  activeFocusOnTab: true
  Accessible.role: Accessible.Button
- Accessible.name: label
- Text { id: text; anchors.centerIn: parent; text: control.label; color: "#f2f2f3"; font.pixelSize: 13; font.weight: Font.Medium }
+ Accessible.name: accessibleLabel
+ Accessible.onPressAction: if (enabled) activated()
+ Text {
+  id: text
+  anchors.centerIn: parent
+  width: Math.min(implicitWidth, Math.max(0, parent.width - 12))
+  text: control.label
+  elide: Text.ElideRight
+  horizontalAlignment: Text.AlignHCenter
+  color: control.enabled ? Theme.text : Theme.secondary
+  font.pixelSize: control.narrow ? 12 : 14
+  font.weight: Font.Medium
+ }
  TapHandler { id: tap; onTapped: control.activated() }
  Keys.onReturnPressed: activated()
  Keys.onSpacePressed: activated()

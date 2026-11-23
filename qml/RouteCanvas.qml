@@ -4,7 +4,11 @@ Canvas {
  id: map
  property var route: []
  property bool panoramic: false
- onRouteChanged: requestPaint()
+ // Backend snapshots copy the same route on every update. Only repaint when
+ // the geometry changes so the schematic stays a static scene texture.
+ readonly property string routeGeometry: JSON.stringify(route)
+ onRouteGeometryChanged: requestPaint()
+ onVisibleChanged: if (visible) requestPaint()
  onWidthChanged: requestPaint()
  onHeightChanged: requestPaint()
  onPaint: {

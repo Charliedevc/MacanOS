@@ -9,15 +9,20 @@
 class LayoutTests:public QObject {
  Q_OBJECT
 private slots:
- void responsive_data(){QTest::addColumn<QString>("role");QTest::addColumn<int>("w");QTest::addColumn<int>("h");for(auto role:{"driver","passenger"})for(auto size:{QSize(1280,480),QSize(1920,720),QSize(1920,1080)})QTest::newRow(qPrintable(QString(role)+QString::number(size.width())+"x"+QString::number(size.height())))<<QString(role)<<size.width()<<size.height();}
+ void responsive_data(){QTest::addColumn<QString>("role");QTest::addColumn<int>("w");QTest::addColumn<int>("h");for(auto role:{"driver","passenger"})for(auto size:{QSize(640,360),QSize(1024,360),QSize(1280,480),QSize(1920,720),QSize(1920,1080)})QTest::newRow(qPrintable(QString(role)+QString::number(size.width())+"x"+QString::number(size.height())))<<QString(role)<<size.width()<<size.height();}
  void responsive(){
   QFETCH(QString,role);QFETCH(int,w);QFETCH(int,h);QTemporaryDir dir;DisplayClient client(role,1,{{"widthPx",w},{"heightPx",h},{"scale",1},{"outputId","test"}},dir.filePath("app.ini"),"","","");
   QQmlApplicationEngine engine;QList<QQmlError> warnings;connect(&engine,&QQmlApplicationEngine::warnings,this,[&](const QList<QQmlError> &errors){warnings+=errors;});
-  engine.rootContext()->setContextProperty("Display",&client);engine.rootContext()->setContextProperty("initialWidth",w);engine.rootContext()->setContextProperty("initialHeight",h);engine.load(QUrl("qrc:/Main.qml"));QVERIFY(!engine.rootObjects().isEmpty());
+  engine.rootContext()->setContextProperty("Display",&client);engine.rootContext()->setContextProperty("initialWidth",w);engine.rootContext()->setContextProperty("initialHeight",h);
+  const bool reducedMotion = w == 640;
+  engine.rootContext()->setContextProperty("simulatorReducedMotion", reducedMotion);
+  engine.load(QUrl("qrc:/Main.qml"));QVERIFY(!engine.rootObjects().isEmpty());
   auto *window=qobject_cast<QQuickWindow*>(engine.rootObjects().first());QVERIFY(window);client.attachWindow(window);window->show();QTest::qWait(100);
-  QCOMPARE(window->width(),w);QCOMPARE(window->height(),h);auto *panel=window->findChild<QQuickItem*>("primaryPanel");QVERIFY(panel);QVERIFY2(panel->width()>350,qPrintable(QString("Collapsed primary panel: %1").arg(panel->width())));
-  for(auto *item:window->findChildren<QQuickItem*>())if(item->objectName()=="action"&&item->isVisible()){
-   QVERIFY2(item->height()>=44,"Touch target below 44 DIP");
+  QCOMPARE(window->property("motionEnabled").toBool(), !reducedMotion);
+  QCOMPARE(window->width(),w);QCOMPARE(window->height(),h);auto *panel=window->findChild<QQuickItem*>("primaryPanel");QVERIFY(panel);QVERIFY2(panel->width()>(w<800?280:350),qPrintable(QString("Collapsed primary panel: %1").arg(panel->width())));
+  const QStringList controlNames{"action","mediaButton","navigationButton"};
+  for(auto *item:window->findChildren<QQuickItem*>())if(controlNames.contains(item->objectName())&&item->isVisible()){
+   QVERIFY2(item->height()>=48&&item->width()>=48,"Touch target below 48 DIP");
    const auto bounds=item->mapRectToScene(QRectF(0,0,item->width(),item->height()));
    QVERIFY2(bounds.left()>=0&&bounds.top()>=0&&bounds.right()<=w&&bounds.bottom()<=h,qPrintable(QString("Touch target outside viewport: %1,%2 %3x%4").arg(bounds.x()).arg(bounds.y()).arg(bounds.width()).arg(bounds.height())));
   }

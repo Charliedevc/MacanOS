@@ -2,11 +2,24 @@
 
 ### A Dual-Display Infotainment Platform for the Porsche Macan
 
-MacanOS is an open-source automotive infotainment development project designed for the **2017 Porsche Macan**. Built around the OCTAVE software platform, MacanOS explores a customizable, dual-display cockpit with synchronized interfaces, vehicle telemetry, navigation, media integration, and configurable screen behavior.
+MacanOS is an open-source automotive infotainment development project designed for the **2017 Porsche Macan**. The v0.7.0 application is a standalone dual-display simulator for synchronized interfaces, configurable screen behavior, and simulated telemetry, navigation, and media.
 
 The project targets a dual 12.3-inch NaviRider display configuration, with development and validation performed in a desktop simulation environment before hardware deployment.
 
-**Current development milestone: v0.6, desktop prototype**
+**Current development milestone: v0.7.0 desktop simulator**
+
+## Build and launch
+
+From Debian WSL2 in this checkout, with Qt 6.7+, a C++17 compiler, CMake 3.21+, Ninja and Python 3 installed:
+
+```sh
+cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=RelWithDebInfo
+cmake --build build --parallel 4
+QT_QPA_PLATFORM=wayland QT_QUICK_BACKEND=software \
+  python3 scripts/run-simulator.py --state-dir "$HOME/.local/state/macanos-v07"
+```
+
+The launcher opens one driver window and one passenger window. Press Ctrl+C in the terminal to stop both. Set `MACANOS_REDUCED_MOTION=1` before launch to use static connection cues and omit decorative motion. The [v0.7 validation report](docs/VALIDATION-v0.7.md) records test results, screenshots, and measured frame timing.
 
 ## Display Architecture
 
@@ -22,19 +35,15 @@ The v0.6 prototype also implements persistent display preferences, synchronized 
 
 ## Technology Stack
 
-MacanOS builds upon the OCTAVE ecosystem and uses a combination of:
+The desktop simulator uses:
 
 - **C++17 / Qt 6 / QML:** Application architecture and graphical interfaces.
 - **CMake:** Native build configuration.
 - **Python 3:** Development tooling and simulator orchestration.
 - **Linux:** Primary desktop simulation and validation environment.
-- **Android:** Intended deployment environment, pending hardware integration.
-- **OBD-II:** Read-only vehicle telemetry architecture.
-- **SQLite:** Local trip and application data.
-- **OpenStreetMap / OSRM:** Navigation architecture.
-- **WebSocket / TCP JSON:** Interprocess communication and synchronization.
+- **Loopback TCP JSON:** Interprocess communication and synchronization.
 
-Not every upstream capability has been integrated into the standalone v0.6 module.
+Earlier engineering records describe OCTAVE services, Android deployment, read-only OBD-II, SQLite trip storage, and OpenStreetMap / OSRM routing. Those integrations remain outside this desktop build.
 
 ## Project Development
 
@@ -45,6 +54,7 @@ Not every upstream capability has been integrated into the standalone v0.6 modul
 | v0.4 | Expanded system integration and validation |
 | v0.5 | Display management, recovery, supervision, hardware abstraction, and rollback |
 | v0.6 | Independent, Shared, and Unified display modes with desktop validation |
+| v0.7.0 | Responsive layouts, 48 DIP controls, and coordinated desktop animations |
 
 Historical development records are preserved in [`v0.2.md`](v0.2.md), [`v0.3.md`](v0.3.md), [`v0.4.md`](v0.4.md), and [`v0.5.md`](v0.5.md).
 
@@ -100,7 +110,7 @@ Third-party access to both NaviRider displays, Android multi-display behavior, a
 
 ## Roadmap
 
-The immediate development priority is **integrating v0.6 with the recovered OCTAVE application source**, rather than expanding the standalone prototype.
+The v0.7.0 milestone improves the standalone desktop simulator. OCTAVE integration and Android deployment remain future milestones.
 
 Subsequent milestones include integrated regression testing, Android deployment, NaviRider compatibility validation, and in-vehicle user-interface refinement.
 
@@ -122,4 +132,4 @@ Porsche and Macan are trademarks of their respective owners.
 
 **Repository:** [github.com/Charliedevc/MacanOS](https://github.com/Charliedevc/MacanOS)
 
-**Development status:** Active prototype development, v0.6 desktop milestone.
+**Development status:** Active prototype development, v0.7.0 desktop milestone.
