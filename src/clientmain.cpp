@@ -57,7 +57,7 @@ void recordFrames(QGuiApplication &app, QQuickWindow &window, const QString &rol
 }
 
 int main(int argc,char **argv){
- QGuiApplication app(argc,argv);app.setOrganizationName("MacanOS");app.setApplicationName("MacanOS v0.7.0 display simulator");
+ QGuiApplication app(argc,argv);app.setOrganizationName("MacanOS");app.setApplicationName("MacanOS v0.7.1 display simulator");
  QCommandLineParser p;p.addHelpOption();p.addOptions({
  {{"r","role"},"driver or passenger","role","driver"},{{"p","port"},"Loopback backend port","port","45670"},
  {"width","Configured native pixel width","pixels","1280"},{"height","Configured native pixel height","pixels","480"},{"scale","Native pixels per logical DIP","factor","1"},

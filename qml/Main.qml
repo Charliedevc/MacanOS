@@ -15,6 +15,22 @@ Window {
  readonly property real edge: compact ? 16 : Theme.edge
  readonly property bool motionEnabled: typeof simulatorReducedMotion === "undefined" || !simulatorReducedMotion
  readonly property bool loading: !Display.online && !snapshot.sessionId
+ property bool settingsOpen: false
+ property bool destinationOpen: false
+ readonly property bool proposalPending: Display.online && Boolean(nav.pending)
+ readonly property bool canSearch: !driver && Display.online && !transitionBusy
+ readonly property string connectionKind: loading ? "loading" : !Display.online ? "offline" :
+     snapshot.resumeRequired && snapshot.bothReady ? "recovered" : ""
+ onCanSearchChanged: if (!canSearch) destinationOpen = false
+ onPaintedModeChanged: destinationOpen = false
+ Shortcut {
+  sequence: "Escape"
+  enabled: root.settingsOpen || root.destinationOpen
+  onActivated: {
+   root.settingsOpen = false
+   root.destinationOpen = false
+  }
+ }
  readonly property var snapshot: Display.state || ({})
  readonly property var model: snapshot.model || ({})
  readonly property var nav: model.navigation || ({})
@@ -24,8 +40,10 @@ Window {
  readonly property var viewports: geometry.viewports || ({})
  readonly property var viewport: viewports[Display.role] || ({x:0,y:0,width:width,height:height})
  readonly property var transition: snapshot.transition || ({})
- readonly property real progress: transition.durationMs > 0 ? Math.max(0,Math.min(1,(Display.serverTime-transition.startMs)/transition.durationMs)) : 1
- readonly property bool transitionBusy: Display.online && Display.serverTime < (transition.startMs || 0)+(transition.durationMs || 0)
+ readonly property real transitionEnd: (transition.startMs || 0) + (transition.durationMs || 0)
+ readonly property bool transitionPending: Display.online && transition.durationMs > 0 && snapshot.serverMs < transitionEnd
+ readonly property real progress: transitionPending ? Math.max(0,Math.min(1,(Display.serverTime-transition.startMs)/transition.durationMs)) : 1
+ readonly property bool transitionBusy: transitionPending && progress < 1
  readonly property bool beforeCut: motionEnabled && progress < .5
  readonly property string paintedMode: !Display.online ? "INDEPENDENT" : beforeCut ? (transition.fromMode || Display.mode) : Display.mode
  readonly property string paintedApp: paintedMode==="INDEPENDENT" ? Display.localApp : paintedMode==="UNIFIED" ? (beforeCut ? (transition.fromScene || "navigation") : snapshot.unifiedScene) : (beforeCut ? (transition.fromApp || "navigation") : snapshot.sharedApp)
@@ -34,22 +52,24 @@ Window {
  readonly property real contentOpacity: !motionEnabled || !Display.online ? 1 : .3+.7*blend*blend*(3-2*blend)
  property real pageOpacity: 1
  onPaintedAppChanged: {
-  if (motionEnabled && paintedMode === "INDEPENDENT" && !transitionBusy && Display.online)
+  destinationOpen = false
+  if (motionEnabled && paintedMode === "INDEPENDENT" && !transitionBusy && Display.online && !settingsOpen)
    pageEnter.restart()
  }
  NumberAnimation {
   id: pageEnter
   target: root
   property: "pageOpacity"
-  from: .48
+  from: .72
   to: 1
-  duration: 195
+  duration: 180
   easing.type: Easing.OutCubic
  }
  Item {
   id: visual
   anchors.fill: parent; opacity: root.contentOpacity * root.pageOpacity
-  enabled: !root.transitionBusy
+  visible: !root.settingsOpen
+  enabled: !root.transitionBusy && visible
   Item {
    anchors.fill: parent;clip: true;visible: root.paintedMode==="UNIFIED"
    Panorama {
@@ -59,23 +79,37 @@ Window {
     model: root.model; app: root.paintedApp
     clockMs: root.motionEnabled && visible && app === "media" ? Display.serverTime : 0
    }
-   Rectangle {
+   RouteSummary {
+    visible: root.paintedApp === "navigation"
     anchors.left: parent.left; anchors.bottom: parent.bottom
     anchors.leftMargin: root.edge; anchors.bottomMargin: footer.height + root.edge
-    width: Math.min(380, parent.width - 2 * root.edge); height: 88
-    color: Theme.chrome; radius: Theme.radius; border.color: Theme.border
-    Column {
-     anchors.fill: parent; anchors.margins: 12; spacing: 3
-     Text { text: root.paintedApp === "media" ? "SILENT MEDIA FIXTURE" : "SCHEMATIC ROUTE / SIMULATED"; color: Theme.muted; font.pixelSize: 11; font.letterSpacing: 1.1 }
-     Text { text: root.paintedApp === "media" ? (root.media.title || "Media") : (root.nav.destination || "Destination"); color: Theme.text; font.pixelSize: 22; width: parent.width; elide: Text.ElideRight }
-     Text {
-      text: root.paintedApp === "media" ? (root.media.artist || "") :
-       (root.nav.distanceKm || 0) + " km  ·  " + (root.nav.etaMinutes || 0) + " min  ·  GPS fixture ±" + (root.nav.accuracyM || 0) + " m"
-      color: Theme.secondary
-      font.pixelSize: 12
-      width: parent.width
-      elide: Text.ElideRight
+    width: Math.min(380, parent.width - 2 * root.edge); height: implicitHeight
+    navigation: root.nav
+    live: Display.online
+   }
+   Panel {
+    visible: root.paintedApp === "media"
+    anchors.left: parent.left; anchors.right: parent.right; anchors.bottom: parent.bottom
+    anchors.margins: root.edge; anchors.bottomMargin: footer.height + root.edge
+    height: root.compact ? 77 : 94
+    color: Theme.chrome
+    RowLayout {
+     anchors.fill: parent
+     anchors.margins: 10
+     spacing: 12
+     Artwork {
+      Layout.preferredWidth: root.compact ? 54 : 70
+      Layout.fillHeight: true
+      track: root.media.title || ""
      }
+    Column {
+     Layout.fillWidth: true
+     spacing: 4
+     Caption { text: "NOW PLAYING · SILENT FIXTURE"; width: parent.width }
+     Text { text: root.media.title || "Media"; color: Theme.text; font.pixelSize: 22; width: parent.width; elide: Text.ElideRight }
+    }
+    Action { label:root.media.playing?"Pause":"Play"; compact:true; enabled:Display.online; onActivated:Display.command("model",{method:"togglePlayback"}) }
+    Action { label:"Next"; compact:true; enabled:Display.online; onActivated:Display.command("model",{method:"nextTrack"}) }
     }
    }
    TapHandler { onTapped: (point)=>Display.touch(point.position.x,point.position.y) }
@@ -96,27 +130,26 @@ Window {
     Text { text:"VEHICLE FIXTURE";color:"#8a98a8";font.pixelSize:11*root.unit;font.letterSpacing:1.2 }
     Text { text:"Read only";color:"#c7d0db";font.pixelSize:15*root.unit }
    }
-   Rectangle {
+   Panel {
     objectName:"primaryPanel";Layout.minimumWidth:200;Layout.fillWidth:true;Layout.fillHeight:true;color:Theme.panel;radius:Theme.radius;clip:true;border.color:Theme.border
     RouteCanvas { anchors.fill: parent;visible:root.paintedApp==="navigation";route:root.nav.route || [] }
-    Column {
-     anchors.left: parent.left; anchors.right: parent.right; anchors.top: parent.top
-     anchors.margins: root.compact ? 14 : 22
-     spacing:8*root.unit;visible:root.paintedApp==="navigation"
-     Text { text:"SCHEMATIC ROUTE / NO LIVE GUIDANCE";color:"#a6b2bd";font.pixelSize:10*root.unit;font.letterSpacing:1.5 }
-     Text { text:root.nav.destination || "Awaiting simulator";color:Theme.text;font.pixelSize:30*root.unit;font.weight:Font.Light; width: parent.width; elide: Text.ElideRight }
-     Text { text:"18.4 km   ·   24 min   ·   GPS SIMULATED ±8 m";color:"#b5c2cf";font.pixelSize:12*root.unit }
+    RouteSummary {
+     anchors.left: parent.left; anchors.right: parent.right; anchors.bottom: parent.bottom
+     anchors.margins: root.compact ? 10 : 14
+     height: implicitHeight
+     visible: root.paintedApp === "navigation" && !root.destinationOpen
+     navigation: root.nav
+     live: Display.online
     }
     RowLayout {
      anchors.fill:parent;anchors.margins:root.compact?12:20;spacing:root.compact?12:20;visible:root.paintedApp==="media"
-     Rectangle {
+     Artwork {
       visible: parent.width >= 390
       Layout.preferredWidth:Math.min(196*root.unit,parent.width*.36)
       Layout.preferredHeight:Math.min(Layout.preferredWidth,parent.height)
       Layout.alignment: Qt.AlignVCenter
-      radius:Theme.radius;color:"#492632";clip:true
-      Repeater { model:12;Rectangle {required property int index;x:parent.width/2-100+index*18;y:-50;width:6;height:450;rotation:28;color:index%3===0?"#df677b":"#74384c";opacity:.8} }
-      Text { anchors.left:parent.left;anchors.bottom:parent.bottom;anchors.margins:16;text:"NIGHT\nDRIVE";font.pixelSize:25*root.unit;font.letterSpacing:4;color:"#fff" }
+      track: root.media.title || ""
+      showTitle: true
      }
      ColumnLayout {
       Layout.fillWidth:true;Layout.alignment:Qt.AlignVCenter;spacing:root.compact?8:14
@@ -131,22 +164,62 @@ Window {
       }
       Text { text:"Shared state · No audible audio";color:"#798b9f";font.pixelSize:11*root.unit }
      }
+     Panel {
+      visible: !root.driver && root.width >= 1000
+      Layout.preferredWidth: parent.width * (root.compact ? .36 : .40)
+      Layout.fillHeight: true
+      clip: true
+      RouteCanvas {
+       anchors.fill: parent
+       route: root.nav.route || []
+      }
+      RouteSummary {
+       anchors.left: parent.left
+       anchors.right: parent.right
+       anchors.bottom: parent.bottom
+       anchors.margins: 8
+       height: implicitHeight
+       navigation: root.nav
+       live: Display.online
+      }
+     }
     }
    }
    ColumnLayout {
     Layout.preferredWidth: root.narrow ? 168 : root.compact ? 194 : (root.driver?216:250)*root.unit
     Layout.minimumWidth: Layout.preferredWidth;Layout.maximumWidth: Layout.preferredWidth;Layout.fillHeight:true;spacing:Theme.gap
-    Rectangle {
+    Panel {
      Layout.fillWidth:true;Layout.fillHeight:true;radius:Theme.radius;color:Theme.panel;border.color:Theme.border
      ColumnLayout {
       anchors.left:parent.left; anchors.right:parent.right; anchors.top:parent.top
       anchors.margins:root.compact?12:16;spacing:root.compact?6:12
       Text { text:root.driver?"NOW PLAYING":"JOURNEY / FIXTURE";color:"#8292a6";font.pixelSize:10*root.unit;font.letterSpacing:1.6 }
+      Artwork {
+       visible: root.driver && !root.compact && root.paintedApp === "navigation"
+       Layout.fillWidth: true
+       Layout.preferredHeight: 76
+       track: root.media.title || ""
+      }
       Text { text:root.driver?(root.media.title||"—"):"Coastal drive";color:"#edf0f5";font.pixelSize:20*root.unit;Layout.fillWidth:true;elide:Text.ElideRight }
       Text { text:root.driver?(root.media.playing?"Playing · Silent fixture":"Paused"):"42.6 mi   ·   54 min";color:"#a3b2c4";font.pixelSize:12*root.unit }
       Rectangle { Layout.fillWidth:true; Layout.preferredHeight:1; color:Theme.border }
       Action { visible:root.driver;label:root.media.playing?"Pause":"Play";enabled:Display.online;onActivated:Display.command("model",{method:"togglePlayback"}) }
-      Action { visible:!root.driver;label:root.narrow?"Share center":"Share city center";accessibleLabel:"Share city center";Layout.fillWidth:true;enabled:Display.online;onActivated:Display.command("model",{method:"proposeDestination",destination:"City center"}) }
+      Action {
+       objectName: "searchDestinationButton"
+       visible: !root.driver
+       label: root.destinationOpen ? "Close search" : root.narrow ? "Destinations" : "Search destinations"
+       accessibleLabel: root.destinationOpen ? "Close search" : "Search destinations"
+       selected: root.destinationOpen
+       Layout.fillWidth: true
+       enabled: root.canSearch
+       onActivated: root.destinationOpen = !root.destinationOpen
+      }
+      Caption {
+       visible: !root.driver && root.proposalPending
+       text: "AWAITING APPROVAL"
+       color: Theme.warning
+       Layout.fillWidth: true
+      }
       Text { text:"Volume " + (root.media.volume || 0) + "%";color:"#a8b7c8";font.pixelSize:12*root.unit }
       Row {
        spacing:8
@@ -157,6 +230,28 @@ Window {
     }
    }
   }
+  DestinationPicker {
+   visible: root.destinationOpen && root.canSearch && root.paintedMode !== "UNIFIED"
+   anchors.left: parent.left; anchors.top: parent.top
+   anchors.leftMargin: root.edge + 10; anchors.topMargin: header.height + root.edge
+   width: Math.min(320, parent.width - 210)
+   height: implicitHeight
+   pending: root.nav.pending || ""
+   onProposed: destination => {
+    Display.command("model", {method:"proposeDestination", destination:destination})
+    root.destinationOpen = false
+   }
+  }
+ }
+ DisplaySettings {
+  visible: root.settingsOpen
+  anchors.fill: parent
+  anchors.margins: root.edge
+  anchors.topMargin: header.height + root.edge / 2
+  anchors.bottomMargin: footer.height + root.edge / 2
+  snapshot: root.snapshot
+  online: Display.online
+  effectiveMode: Display.mode
  }
  Rectangle {
   id: header;anchors.left:parent.left;anchors.right:parent.right;height:root.compact?64:72*root.unit;color:Theme.chrome
@@ -164,7 +259,7 @@ Window {
    anchors.fill:parent;anchors.leftMargin:root.edge;anchors.rightMargin:root.edge;spacing:root.narrow?6:Theme.gap
    Column { spacing:3
     Text { text:"M A C A N O S";color:"#f4f5f8";font.pixelSize:17*root.unit;font.weight:Font.Medium }
-    Text { text:Display.role.toUpperCase()+" / v0.7 SIMULATOR";color:Theme.muted;font.pixelSize:10; font.letterSpacing: .8 }
+    Text { text:Display.role.toUpperCase()+" / v0.7.1";color:Theme.muted;font.pixelSize:10; font.letterSpacing: .8 }
    }
    Item { Layout.fillWidth:true }
    Row {
@@ -182,8 +277,32 @@ Window {
     }
    }
    Rectangle { width:1;height:28;color:"#333b46" }
-   Action { objectName:"navigationButton";label:root.narrow?"Nav":"Navigation";accessibleLabel:"Navigation";enabled:Display.mode==="INDEPENDENT" || (Display.online && !root.transitionBusy);selected:Display.selectedApp==="navigation";compact:true;narrow:root.narrow;onActivated:Display.selectApp("navigation") }
-   Action { objectName:"mediaButton";label:"Media";enabled:Display.mode==="INDEPENDENT" || (Display.online && !root.transitionBusy);selected:Display.selectedApp==="media";compact:true;narrow:root.narrow;onActivated:Display.selectApp("media") }
+   Action {
+    objectName:"navigationButton"; label:root.narrow?"Nav":"Navigation"; accessibleLabel:"Navigation"
+    enabled:Display.mode==="INDEPENDENT" || (Display.online && !root.transitionBusy)
+    selected:!root.settingsOpen && Display.selectedApp==="navigation"
+    compact:true; narrow:root.narrow
+    onActivated: { root.settingsOpen = false; Display.selectApp("navigation") }
+   }
+   Action {
+    objectName:"mediaButton"; label:"Media"
+    enabled:Display.mode==="INDEPENDENT" || (Display.online && !root.transitionBusy)
+    selected:!root.settingsOpen && Display.selectedApp==="media"
+    compact:true; narrow:root.narrow
+    onActivated: { root.settingsOpen = false; Display.selectApp("media") }
+   }
+   Action {
+    objectName: "displaySettingsButton"
+    label: root.narrow ? "⚙" : root.settingsOpen ? "Close" : "Displays"
+    accessibleLabel: root.settingsOpen ? "Close display settings" : "Display settings"
+    selected: root.settingsOpen
+    compact: true
+    narrow: root.narrow
+    onActivated: {
+     root.destinationOpen = false
+     root.settingsOpen = !root.settingsOpen
+    }
+   }
   }
  }
  Rectangle {
@@ -195,20 +314,36 @@ Window {
     width: 8; height: 8; radius: 4
     color: !Display.online || root.snapshot.resumeRequired ? Theme.warning : Theme.ready
     Behavior on color { enabled: root.motionEnabled; ColorAnimation { duration: 180 } }
-    opacity: root.motionEnabled && root.loading ? .65+.35*Math.cos(Display.serverTime/220) : 1
    }
-   Text { text:root.loading?"CONNECTING TO SIMULATOR":!Display.online?"BACKEND OFFLINE / STALE · INDEPENDENT FALLBACK":root.snapshot.resumeRequired?"DISPLAY RECOVERED · SELECT SAVED MODE TO RESUME":Display.mode==="UNIFIED"?"LOGICAL PANORAMA · CLIPPED VIEWPORT / "+Display.role.toUpperCase():Display.mode==="SHARED"?"SHARED SESSION · ROLE-SPECIFIC LAYOUT":"INDEPENDENT LAYOUT · SHARED SERVICES";color:Theme.secondary;font.pixelSize:11;Layout.fillWidth:true;elide:Text.ElideRight }
+   Text { text:root.loading?"CONNECTING TO SIMULATOR":!Display.online?"BACKEND OFFLINE / STALE · INDEPENDENT FALLBACK":root.snapshot.resumeRequired?(root.snapshot.bothReady?"DISPLAY RECOVERED · SELECT SAVED MODE TO RESUME":"DISPLAY UNAVAILABLE · INDEPENDENT FALLBACK"):Display.mode==="UNIFIED"?"LOGICAL PANORAMA · CLIPPED VIEWPORT / "+Display.role.toUpperCase():Display.mode==="SHARED"?"SHARED SESSION · ROLE-SPECIFIC LAYOUT":"INDEPENDENT LAYOUT · SHARED SERVICES";color:Theme.secondary;font.pixelSize:11;Layout.fillWidth:true;elide:Text.ElideRight }
    Text { text:root.narrow?"SIMULATED":"SIMULATED · NO VEHICLE CONNECTION";color:"#e38c9b";font.pixelSize:11;font.letterSpacing:.7 }
   }
  }
- Rectangle {
-  visible:Display.online && (root.nav.pending || "")!=="";anchors.horizontalCenter:parent.horizontalCenter;anchors.bottom:parent.bottom;anchors.bottomMargin:footer.height+root.edge
+ ConnectionCard {
+  kind: !root.settingsOpen && !root.proposalPending ? root.connectionKind : ""
+  motion: root.motionEnabled
+  requestedMode: root.snapshot.requestedMode || ""
+  anchors.horizontalCenter: parent.horizontalCenter
+  anchors.bottom: parent.bottom
+  anchors.bottomMargin: footer.height + root.edge
+  width: Math.min(530, parent.width - 2 * root.edge)
+  height: implicitHeight
+  onResumeRequested: Display.modeSelect(requestedMode)
+ }
+ Panel {
+  visible:root.proposalPending && !root.settingsOpen
+  anchors.horizontalCenter:parent.horizontalCenter;anchors.bottom:parent.bottom;anchors.bottomMargin:footer.height+root.edge
   width:Math.min(parent.width-48,550*root.unit);height:76;radius:Theme.radius;color:"#252029";border.color:"#ac5b6e"
   RowLayout {
    anchors.fill:parent;anchors.margins:14*root.unit;spacing:12
-   Text { text:root.driver?"Approve " + root.nav.pending + "?":"Awaiting driver approval: " + root.nav.pending;color:"#f8edf1";font.pixelSize:14*root.unit;Layout.fillWidth:true;elide:Text.ElideRight }
-   Action { visible:root.driver;label:"Approve";compact:true;enabled:Display.online;onActivated:Display.command("model",{method:"approveDestination"}) }
-   Action { visible:root.driver;label:"Decline";compact:true;enabled:Display.online;onActivated:Display.command("model",{method:"rejectDestination"}) }
+   ColumnLayout {
+    Layout.fillWidth: true
+    spacing: 3
+    Caption { text: root.driver ? "PASSENGER PROPOSAL" : "AWAITING DRIVER APPROVAL"; color: Theme.warning; Layout.fillWidth: true }
+    Text { text:root.nav.pending || "";color:Theme.text;font.pixelSize:18;Layout.fillWidth:true;elide:Text.ElideRight }
+   }
+   Action { visible:root.driver;label:"Approve";selected:true;compact:true;enabled:!root.transitionBusy;onActivated:Display.command("model",{method:"approveDestination"}) }
+   Action { visible:root.driver;label:"Decline";compact:true;enabled:!root.transitionBusy;onActivated:Display.command("model",{method:"rejectDestination"}) }
   }
  }
  Rectangle {

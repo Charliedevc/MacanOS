@@ -18,6 +18,12 @@ DisplayClient::DisplayClient(QString role,int p,QVariantMap display,QString stor
  connect(&fast,&QTimer::timeout,this,[this]{emit tick();});fast.start(16);
  connect(&maintenance,&QTimer::timeout,this,&DisplayClient::poll);maintenance.start(250);reconnect();
 }
+DisplayClient::~DisplayClient()
+{
+ // A connected socket can emit disconnected from its destructor. Disable
+ // callbacks before the connection state and retry timer are destroyed.
+ QObject::disconnect(&socket, nullptr, this, nullptr);
+}
 void DisplayClient::attachWindow(QQuickWindow *w){
  window=w;resizeTimer.setSingleShot(true);resizeTimer.setInterval(150);
  connect(w,&QQuickWindow::widthChanged,this,[this]{resizeTimer.start();});

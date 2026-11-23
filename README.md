@@ -2,11 +2,11 @@
 
 ### A Dual-Display Infotainment Platform for the Porsche Macan
 
-MacanOS is an open-source automotive infotainment development project designed for the **2017 Porsche Macan**. The v0.7.0 application is a standalone dual-display simulator for synchronized interfaces, configurable screen behavior, and simulated telemetry, navigation, and media.
+MacanOS is an open-source automotive infotainment development project designed for the **2017 Porsche Macan**. The v0.7.1 application is a standalone dual-display simulator for synchronized interfaces, configurable screen behavior, and simulated telemetry, navigation, and media.
 
 The project targets a dual 12.3-inch NaviRider display configuration, with development and validation performed in a desktop simulation environment before hardware deployment.
 
-**Current development milestone: v0.7.0 desktop simulator**
+**Current development milestone: v0.7.1 desktop simulator**
 
 ## Build and launch
 
@@ -19,7 +19,7 @@ QT_QPA_PLATFORM=wayland QT_QUICK_BACKEND=software \
   python3 scripts/run-simulator.py --state-dir "$HOME/.local/state/macanos-v07"
 ```
 
-The launcher opens one driver window and one passenger window. Press Ctrl+C in the terminal to stop both. Set `MACANOS_REDUCED_MOTION=1` before launch to use static connection cues and omit decorative motion. The [v0.7 validation report](docs/VALIDATION-v0.7.md) records test results, screenshots, and measured frame timing.
+The launcher opens one driver window and one passenger window. The **Displays** button opens the simulator display inventory. Passengers can filter the built-in destination list and propose a route for the driver to approve. Press Ctrl+C in the terminal to stop both windows. Set `MACANOS_REDUCED_MOTION=1` before launch to use static connection cues and omit decorative motion. The [v0.7.1 validation report](docs/VALIDATION-v0.7.1.md) records test results, screenshots, and measured frame timing.
 
 ## Display Architecture
 
@@ -55,6 +55,7 @@ Earlier engineering records describe OCTAVE services, Android deployment, read-o
 | v0.5 | Display management, recovery, supervision, hardware abstraction, and rollback |
 | v0.6 | Independent, Shared, and Unified display modes with desktop validation |
 | v0.7.0 | Responsive layouts, 48 DIP controls, and coordinated desktop animations |
+| v0.7.1 | Route and media refinement, destination filtering, display inventory, and recovery controls |
 
 Historical development records are preserved in [`v0.2.md`](v0.2.md), [`v0.3.md`](v0.3.md), [`v0.4.md`](v0.4.md), and [`v0.5.md`](v0.5.md).
 
@@ -110,7 +111,7 @@ Third-party access to both NaviRider displays, Android multi-display behavior, a
 
 ## Roadmap
 
-The v0.7.0 milestone improves the standalone desktop simulator. OCTAVE integration and Android deployment remain future milestones.
+The v0.7.1 milestone improves the standalone desktop simulator. OCTAVE integration and Android deployment remain future milestones.
 
 Subsequent milestones include integrated regression testing, Android deployment, NaviRider compatibility validation, and in-vehicle user-interface refinement.
 
@@ -132,4 +133,4 @@ Porsche and Macan are trademarks of their respective owners.
 
 **Repository:** [github.com/Charliedevc/MacanOS](https://github.com/Charliedevc/MacanOS)
 
-**Development status:** Active prototype development, v0.7.0 desktop milestone.
+**Development status:** Active prototype development, v0.7.1 desktop milestone.

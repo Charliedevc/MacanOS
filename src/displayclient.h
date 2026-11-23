@@ -20,6 +20,7 @@ class DisplayClient : public QObject {
  Q_PROPERTY(QString message READ message NOTIFY changed)
 public:
  DisplayClient(QString role,int port,QVariantMap spec,QString storage,QString diagnostic,QString control,QString presence,QObject *parent=nullptr);
+ ~DisplayClient() override;
  void attachWindow(QQuickWindow *w);
  QVariantMap state()const{return shared;}
  QString role()const{return roleName;}

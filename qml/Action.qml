@@ -17,6 +17,8 @@ Rectangle {
  color: tap.pressed ? Theme.pressed : selected ? Theme.selected : Theme.control
  border.color: selected ? Theme.accent : "#363d47"
  Behavior on color { enabled: control.motionEnabled; ColorAnimation { duration: 110 } }
+ scale: tap.pressed && motionEnabled ? .97 : 1
+ Behavior on scale { enabled: control.motionEnabled; NumberAnimation { duration: 105; easing.type: Easing.OutCubic } }
  border.width: 1
  opacity: enabled ? 1 : 0.65
  activeFocusOnTab: true
