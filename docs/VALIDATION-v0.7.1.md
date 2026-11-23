@@ -132,6 +132,31 @@ Local evidence is in `artifacts/v0.7.1/single-renderer-matrix.log` and
 minimal Qt source are under the same ignored directory. The software
 launcher in [README.md](../README.md) remains the verified fallback.
 
+#### Debian diagnostic tools
+
+GDB 16.3 (`16.3-1`) reproduced SIGSEGV in both Qt render loops. The
+llvmpipe control exited normally with 191 frame swaps. In both D3D12
+backtraces, `std::string::_M_assign` was called through Intel's
+`libigc.so`, with Intel's `libLLVM-9.so` and `libigd12um64xel.so` on
+the same stack. This localizes the failure to a call path through Intel's
+WSL graphics compiler and driver. Intel function symbols were unavailable.
+The exact defect remains unresolved. Keep the software renderer and
+revalidate the minimal probe after any approved graphics-stack change.
+Local evidence is under `artifacts/v0.7.1/gdb.JWchTOa4/`; the runner is
+`artifacts/v0.7.1/qt-render-probe/run-gdb.sh`.
+
+Cppcheck 2.17.1 (`2.17.1-2`) initially rejected the unbuilt Qt-generated
+MOC files in the compile database. A filtered copy retained eight compile
+entries across seven authored C++ files in `src/` and `tests/`. Using Qt
+rules with warning, performance, and portability checks, the run found
+seven pass-by-reference or return-by-reference performance suggestions
+and no error, warning, or portability diagnostics. Normal analysis limited
+branch coverage. Review the suggestions in context before applying them,
+especially for Qt interfaces. Rerun the ignored
+`artifacts/v0.7.1/run-cppcheck.sh` after generating the compile database
+with `cmake -S . -B build-cppcheck -G Ninja -DCMAKE_EXPORT_COMPILE_COMMANDS=ON`.
+The report is `artifacts/v0.7.1/cppcheck-initial.log`.
+
 Reproduce from the Debian shell after building:
 
 ```sh

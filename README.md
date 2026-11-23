@@ -1,12 +1,12 @@
 # MacanOS
 
-### A Dual-Display Infotainment Platform for the Porsche Macan
+### A Modular Onboard Computing Platform for the 2017 Porsche Macan
 
-MacanOS is an open-source automotive infotainment development project designed for the **2017 Porsche Macan**. The v0.7.1 application is a standalone dual-display simulator for synchronized interfaces, configurable screen behavior, and simulated telemetry, navigation, and media.
+MacanOS is an open-source project to build a locally operated onboard computing platform for the **2017 Porsche Macan**. The long-term design pairs onboard processing and storage with independent software modules for display coordination, read-only Porsche diagnostics, navigation, media, and local apps.
 
-The project targets a dual 12.3-inch NaviRider display configuration, with development and validation performed in a desktop simulation environment before hardware deployment.
+The proposed installation targets two 12.3-inch NaviRider displays and can use a dedicated external computer or supported Android hardware, subject to verification. The platform should work offline for its core functions and be removable without compromising factory functionality. The planned JL Audio DSP amplifier, speakers, and subwoofer are potential integration points. See the [architecture vision](docs/ARCHITECTURE-VISION.md).
 
-**Current development milestone: v0.7.1 desktop simulator**
+**Verified baseline:** v0.7.1 desktop simulator, checkpoint `1f91338`. It exercises synchronized interfaces and configurable screen behavior with simulated telemetry, navigation, and media. The 35 automated cases and three display modes were verified in Debian WSL2.
 
 ## Build and launch
 
@@ -23,7 +23,7 @@ The launcher opens one driver window and one passenger window. The **Displays** 
 
 ## Display Architecture
 
-MacanOS supports three display configurations:
+The desktop simulator supports three display configurations:
 
 | Mode | Description |
 |---|---|
@@ -31,7 +31,7 @@ MacanOS supports three display configurations:
 | Shared | Both displays synchronize application state while retaining role-specific layouts. |
 | Unified | Both displays form a panoramic interface with bezel compensation and touch-coordinate mapping. |
 
-The v0.6 prototype also implements persistent display preferences, synchronized animations, simulated display connectivity, and disconnection fallback behavior.
+The simulator also implements persistent display preferences, synchronized animations, simulated display connectivity, and disconnection fallback. Operation on the physical NaviRider pair remains a proposed capability.
 
 ## Technology Stack
 
@@ -81,39 +81,15 @@ These images document the visual evolution of the driver and passenger interface
 
 ## Current Development Status
 
-**Implemented or documented**
-
-- Three desktop display modes
-- Persistent display configuration
-- Synchronized interface state and animations
-- Unified-screen bezel and touch mapping
-- Display disconnection fallback
-- Historical recovery and hardware-management architecture
-
-**Integration and validation remaining**
-
-- Restore and integrate the complete OCTAVE application baseline
-- Merge the v0.6 display module with the existing application services
-- Validate navigation, media, telemetry, and recovery regression behavior
-- Build and test the integrated Android application
-- Verify dual-display access, touch routing, and performance on NaviRider hardware
-- Complete in-vehicle testing
-
-The recovered OCTAVE v0.9.5 source archive is a candidate upstream baseline. Its compatibility with the historical MacanOS v0.5 implementation must be verified before integration.
+The v0.7.1 checkpoint verifies the desktop simulator only. Proposed platform capabilities include detailed Porsche fault information, a companion troubleshooting view on the second screen, and offline access to locally stored guidance. Vehicle diagnostics, physical display control, CarPlay coexistence, Android deployment, and DSP control all require separate validation.
 
 ## Safety and Hardware Compatibility
 
-MacanOS is an experimental infotainment project, not a replacement for factory vehicle control or safety systems.
-
-Vehicle diagnostics are intended to remain read-only. The project does not require modification of braking, steering, powertrain, or other safety-critical vehicle controls.
-
-Third-party access to both NaviRider displays, Android multi-display behavior, and hardware-specific touch routing have not yet been verified.
+Preserve factory controls, safety systems, and normal vehicle operation throughout testing and installation. Require read-only vehicle diagnostics, with no fault clearing, coding, actuation, or firmware writes. Any installation must have a documented way to restore the original configuration.
 
 ## Roadmap
 
-The v0.7.1 milestone improves the standalone desktop simulator. OCTAVE integration and Android deployment remain future milestones.
-
-Subsequent milestones include integrated regression testing, Android deployment, NaviRider compatibility validation, and in-vehicle user-interface refinement.
+The [roadmap](ROADMAP.md) keeps the current WSLg D3D12 diagnostic separate from future platform work. Qt Quick software remains the verified desktop fallback.
 
 ## Upstream Project and Licensing
 
