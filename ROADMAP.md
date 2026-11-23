@@ -8,6 +8,6 @@
 
 ## Next task after explicit authorization
 
-Investigate why both Intel Iris Xe D3D12 clients stall before registering on this WSLg setup. Reproduce with one unmodified v0.7.1 client first, then with the two-window harness, capturing Qt renderer identity and launcher diagnostics. Use the checked-in software-rendered launcher as the working path. Reassess after a host graphics or WSLg update. Treat hardware GPU validation and sustained 60 FPS as open until two clients complete a measured run.
+The D3D12 failure reproduces in one unchanged v0.7.1 client and in a minimal Qt Quick window. Next, collect a symbolized crash backtrace from the minimal program before changing the host graphics stack. Compare the basic and threaded paths. Retest the minimal probe after any approved graphics update before returning to the two-window harness. Continue to use the software renderer for the simulator.
 
 OCTAVE integration, Android deployment, and physical display or vehicle work remain deferred.

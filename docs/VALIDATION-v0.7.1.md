@@ -93,6 +93,45 @@ before the benchmark startup timeout. This occurred in the v0.7.0 threaded
 Wayland probe and the v0.7.1 basic-loop Wayland and XWayland probes. No
 GPU frame samples were accepted. Qt Quick software is the verified renderer.
 
+#### Single-client follow-up
+
+The unchanged v0.7.1 driver binary at checkpoint `1f91338` was run alone at
+1280 × 480 logical pixels through WSLg Wayland, with a fresh server and state
+directory for each case. Startup means the client reported online and a
+separate backend query confirmed driver registration. Rendering means the
+client produced a complete window capture. FPS below counts Qt swap events
+over ten local Navigation/Media changes, including waits between changes.
+It is workload-specific and differs from the two-window Unified results.
+
+| Renderer | Requested Qt loop | Startup and rendering | Workload FPS |
+| --- | --- | --- | ---: |
+| Qt Quick software | Basic | Registered in 0.329 s, rendered, exit 0 | 45.74 |
+| Qt Quick software | Threaded | Registered in 0.285 s, rendered, exit 0 | 48.59 |
+| Default OpenGL, llvmpipe | Basic | Registered in 0.568 s, rendered, exit 0 | 44.53 |
+| Default OpenGL, llvmpipe | Threaded | Registered in 0.328 s, rendered, exit 0 | 46.91 |
+| D3D12 OpenGL, Intel Iris Xe | Basic | OpenGL context created, SIGSEGV before registration, no capture | — |
+| D3D12 OpenGL, Intel Iris Xe | Threaded | OpenGL context created, SIGSEGV before registration, no capture | — |
+
+Qt confirmed the selected basic and threaded loops in the OpenGL logs. The
+software logs identified the software backend without confirming distinct
+loop implementations. Default OpenGL used CPU-based llvmpipe, so its results
+are software results too.
+
+A separate Qt Quick program with one animated rectangle, a periodic heartbeat
+and a frame-swap counter reproduced the crash without MacanOS, sockets or a
+display coordinator. Default OpenGL produced 218 swaps in the basic loop and
+201 in the threaded loop and exited normally. Both forced D3D12 runs created
+an OpenGL 4.1 context, then exited with signal 11 before any heartbeat or
+swap summary. The reproduction narrows the issue to the Qt Quick and WSLg
+D3D12 graphics path. It does not isolate Qt, Mesa, WSLg or the Windows driver
+as the faulty component. The single-client test was enough to reproduce the
+failure, so the previously failed two-client GPU cases were not repeated.
+
+Local evidence is in `artifacts/v0.7.1/single-renderer-matrix.log` and
+`artifacts/v0.7.1/minimal-qt-renderer.log`. The two probe runners and the
+minimal Qt source are under the same ignored directory. The software
+launcher in [README.md](../README.md) remains the verified fallback.
+
 Reproduce from the Debian shell after building:
 
 ```sh

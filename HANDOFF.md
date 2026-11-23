@@ -23,4 +23,16 @@ The shell check saves evidence in a fresh ignored directory under `artifacts/`. 
 
 ## Resume point
 
-The exact next task, after approval to continue beyond this checkpoint, is the D3D12 startup diagnostic in [ROADMAP.md](ROADMAP.md). Start with one unchanged v0.7.1 client and confirm registration and rendering before starting a pair. Preserve the software path. There is no verified GPU FPS result and sustained 60 FPS is open. The display coordinator and baseline archives remain authoritative.
+The single-client D3D12 diagnostic is complete. The unchanged v0.7.1 driver
+registered and rendered with Qt Quick software and default OpenGL (llvmpipe).
+Forced Intel Iris Xe D3D12 OpenGL crashed with SIGSEGV before registration
+under both confirmed Qt render loops. A standalone Qt Quick window with no
+MacanOS code also crashed under both D3D12 loops. The cause has been narrowed
+to the graphics path, but the faulty component is still unknown.
+
+The [validation report](docs/VALIDATION-v0.7.1.md) has startup results, frame
+counts and local evidence paths. The next task after authorization is to
+collect a symbolized backtrace from the minimal Qt program, as specified in
+[ROADMAP.md](ROADMAP.md). Preserve the software launcher. There is no verified
+GPU FPS result, and sustained 60 FPS remains open. No application source or
+system graphics settings were changed during the diagnostic.
